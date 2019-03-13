@@ -1,0 +1,14 @@
+Matrix Capstone Log
+
+Everything up until the start of this log: Matrix (With deprecated matrix operations), test_main, adddition (Deprecated)
+
+3-13-19: 
+ - Creating the Mtxops class. This will act like the Math class and serves for matrix operations.
+ 	- I didn't like using the Matrix class to do math, as you needed a matrix to do the work on.
+ 	- The idea is to create a class to call functions with the two operands as parameters instead.
+ 	- This feels much more "proper", though you lose an immediate plus-equals operation. 
+ 		- I think it's worth it, because it makes matrix operations behave like Math.(Operation), which is something most java developers will be familiar with, therefore, it should improve usability.
+ 	- Ultimately, I've properly moved addition and subtraction to Mtxops, I added Multiplication for both scalars and dot products.
+ 	
+ - A short justification for row ops in the matrix class with matrix ops in a separate class: You always do matrix operations with two or more matrices, or some form of "outer matrix" participation, but row operations happen exclusively in a single matrix. It is more intuitive to call those ops on the specific matrix, it's less intuitive to call two matrixes by one matrix being called on and the other matrix having a paramter being passed.
+ 

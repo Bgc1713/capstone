@@ -23,6 +23,16 @@ public class Matrix {
 		}
 	}
 	
+	//TODO COPY CONSTRUCTOR
+	/* The Matrix Copy constructor
+	 * @param A The matrix to be copied.
+	 */
+	public Matrix(Matrix A)
+	{
+		this(A.getRows(), A.getColumns());
+		
+		
+	}
 	public String toString()
 	{
 	  String mtxString = "";
@@ -84,6 +94,10 @@ public class Matrix {
 	 * I also realized that since row operations are only ever done in the context of one matrix, creating public methods 
 	 * that aid in row operation are completely useless, as I'm writing code to be used in the ONE place it isn't helpful.
 	 */
+	/* A row addition operation.
+	 * @param targetRow The row to add to.
+	 * @param sourcerow The row to use for addition.
+	 */
 	public void addToRow(int targetRow, int sourceRow)
 	{
 		for (int i = 0; i < columns; i ++)
@@ -92,12 +106,42 @@ public class Matrix {
 		}
 	}
 	
+	/* A row addition operation with a scalar.
+	 * @param targetRow The row to add to.
+	 * @param sourceRow The row to use for addition.
+	 * @param scalar The scalar to multiply the source row by.
+	 */
+	public void addToRow(int targetRow, int sourceRow, double scalar)
+	{
+		for (int i = 0; i < columns; i ++)
+		{
+			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) + (scalar* mtx.get(sourceRow - 1).get(i))));
+		}
+	}
+	
 	/* So you add TO things when they're the target, but subtract FROM things when they're the target */
+	/* Subtracts one row from another.
+	 * @param targetRow The row to subtract from.
+	 * @param sourceRow The row to use for subtraction.
+	 */
 	public void subtractFromRow(int targetRow, int sourceRow)
 	{
 		for (int i = 0; i < columns; i ++)
 		{
 			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) - mtx.get(sourceRow - 1).get(i)));
+		}
+	}
+	
+	/* Subtracts one row from another.
+	 * @param targetRow The row to subtract from.
+	 * @param sourceRow The row to use for subtraction.
+	 * @param scalar The scalar to multiply the source row by.
+	 */
+	public void subtractFromRow(int targetRow, int sourceRow, double scalar)
+	{
+		for (int i = 0; i < columns; i ++)
+		{
+			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) - (scalar * mtx.get(sourceRow - 1).get(i))));
 		}
 	}
 	

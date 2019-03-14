@@ -9,6 +9,11 @@ public class Matrix {
 	int columns = 0;
 	double defaultNum = 0;
 	
+	/**
+	 * The Matrix constructor, creates a matrix with all elements set to 0
+	 * @param totalRows the amount of rows the matrix will have.
+	 * @param totalColumns the amount of columns the matrix will have.
+	 */
 	public Matrix(int totalRows, int totalColumns)
 	{
 		rows = totalRows;
@@ -22,17 +27,30 @@ public class Matrix {
 			}
 		}
 	}
-	
-	//TODO COPY CONSTRUCTOR
-	/* The Matrix Copy constructor
+
+	/** 
+	 * The Matrix Copy constructor
 	 * @param A The matrix to be copied.
 	 */
 	public Matrix(Matrix A)
 	{
-		this(A.getRows(), A.getColumns());
-		
+		rows = A.getRows();
+		columns = A.getColumns();
+		for (int i = 0; i < rows; i++)
+		{
+			mtx.add(new ArrayList<Double>());
+			for(int j = 0; j < columns; j++)
+			{
+				mtx.get(i).add(A.getItem(i + 1, j + 1));
+			}
+		}
+
 		
 	}
+	/**
+	 * Get the matrix represented as a string.
+	 * @return A string representation of the matrix.
+	 */
 	public String toString()
 	{
 	  String mtxString = "";
@@ -44,21 +62,41 @@ public class Matrix {
 	  return mtxString;
 	}
 	
+	/**
+	 * Sets the value of a specific location in the matrix.
+	 * @param row the row containing the location.
+	 * @param column the column containing the location.
+	 * @param the value to place at the location.
+	 */
 	public void setItem(int row, int column, double value)
 	{
 		mtx.get(row - 1).set(column - 1, value);
 	}
 	
+	/**
+	 * Get the item stored at a specific location.
+	 * @param row the row containing the location.
+	 * @param column the column containing the location.
+	 * @return the value stored in this location.
+	 */
 	public double getItem(int row, int column)
 	{
 		return mtx.get(row - 1).get(column - 1);
 	}
 	
+	/**
+	 * Gets the total amount of rows in a matrix.
+	 * @return the amount of rows in this matrix.
+	 */
 	public int getRows()
 	{
 		return rows;
 	}
 	
+	/**
+	 * Gets the total amount of columns in a matrix.
+	 * @return the amount of columns in this matrix.
+	 */
 	public int getColumns()
 	{
 		return columns;
@@ -75,6 +113,11 @@ public class Matrix {
 		return row;
 	}
 	
+	/**
+	 * Swap two rows in a matrix.
+	 * @param row1 The first row to swap.
+	 * @param row2 The second row to swap.
+	 */
 	public void swapRows(int row1, int row2)
 	{
 		ArrayList<Double> tempRow = new ArrayList<Double>();
@@ -94,7 +137,8 @@ public class Matrix {
 	 * I also realized that since row operations are only ever done in the context of one matrix, creating public methods 
 	 * that aid in row operation are completely useless, as I'm writing code to be used in the ONE place it isn't helpful.
 	 */
-	/* A row addition operation.
+	/**
+	 * A row addition operation.
 	 * @param targetRow The row to add to.
 	 * @param sourcerow The row to use for addition.
 	 */
@@ -106,7 +150,8 @@ public class Matrix {
 		}
 	}
 	
-	/* A row addition operation with a scalar.
+	/**
+	 * A row addition operation with a scalar.
 	 * @param targetRow The row to add to.
 	 * @param sourceRow The row to use for addition.
 	 * @param scalar The scalar to multiply the source row by.
@@ -120,7 +165,8 @@ public class Matrix {
 	}
 	
 	/* So you add TO things when they're the target, but subtract FROM things when they're the target */
-	/* Subtracts one row from another.
+	/**
+	 * Subtracts one row from another.
 	 * @param targetRow The row to subtract from.
 	 * @param sourceRow The row to use for subtraction.
 	 */
@@ -132,7 +178,8 @@ public class Matrix {
 		}
 	}
 	
-	/* Subtracts one row from another.
+	/** 
+	 * Subtracts one row from another.
 	 * @param targetRow The row to subtract from.
 	 * @param sourceRow The row to use for subtraction.
 	 * @param scalar The scalar to multiply the source row by.
@@ -152,7 +199,33 @@ public class Matrix {
 	 * However, using setItem/getItem DOES require me to add 1 to i and j before passing them.
 	 */
 	
-	/* Addition to a matrix (A = A + B, plus-equals)
+	/**
+	 * Multiply a row by a scalar constant
+	 * @param targetRow The row to multiply.
+	 * @param scalar The scalar to multiply the row by.
+	 */
+	public void multiplyRow(int targetRow, double scalar)
+	{
+		for (int i = 0; i < columns; i ++)
+		{
+			mtx.get(targetRow - 1).set(i, ((mtx.get(targetRow - 1).get(i) * scalar)) );
+		}
+	}
+	
+	/**
+	 * Divide a row by a scalar constant
+	 * @param targetRow The row to divide.
+	 * @param scalar The scalar to divide the row by.
+	 */
+	public void divideRow(int targetRow, double scalar)
+	{
+		for (int i = 0; i < columns; i ++)
+		{
+			mtx.get(targetRow - 1).set(i, ((mtx.get(targetRow - 1).get(i) / scalar)) );
+		}
+	}	
+	/**
+	 * Addition to a matrix (A = A + B, plus-equals)
 	 * @param source the matrix that will be added to the matrix this function is being called from
 	 */
 	public void addTo(Matrix source)
@@ -173,7 +246,8 @@ public class Matrix {
 		}
 	}
 	
-	/* Addition of two matrixes (C = A + B)
+	/** 
+	 * Addition of two matrixes (C = A + B)
 	 * I consider it fairly clever to use the previous addition in a novel way to create a new matrix of
 	 * two other matrices being added together. See deprecated addition class to see more thoughts on it.
 	 * @param source the matrix to be added to the matrix the function being called on
@@ -186,7 +260,8 @@ public class Matrix {
 		return newMatrix;
 	}
 	
-	/* Subraction from a matrix (A = A - B, minus-equals)
+	/**
+	 *  Subraction from a matrix (A = A - B, minus-equals)
 	 * @param source Matrix B, The matrix to subtract from the matrix subtractFrom is being called on)
 	 */
 	public void subtractFrom(Matrix source)
@@ -207,7 +282,8 @@ public class Matrix {
 		}
 	}
 	
-	/* Subtraction of two matrixes (C = A - B)
+	/**
+	 *  Subtraction of two matrixes (C = A - B)
 	 * Another clever concept: Using addition to copy a matrix to a matrix of zeroes. Since the new matrix is 
 	 * already initialized on its own and filled with zeroes, using addition to copy is a way to sufficiently deep copy.
 	 * @param source Matrix B, the matrix to subtract from the matrix subtract is being called on

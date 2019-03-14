@@ -12,3 +12,8 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  	
  - A short justification for row ops in the matrix class with matrix ops in a separate class: You always do matrix operations with two or more matrices, or some form of "outer matrix" participation, but row operations happen exclusively in a single matrix. It is more intuitive to call those ops on the specific matrix, it's less intuitive to call two matrixes by one matrix being called on and the other matrix having a paramter being passed.
  
+3-14-19:
+ - Created copy constructor for matrixes
+ - Started work on gaussian elimination
+ 	- Got it completed, but it probably doesn't work on outliers such as 1x1 matrices. I was told code was expectedto be alpha quality so I won't worry too hard.
+ 	- I forgot to add multiply and divide row operations so I had to implement them real quick.

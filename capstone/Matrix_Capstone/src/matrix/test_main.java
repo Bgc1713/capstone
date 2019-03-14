@@ -65,45 +65,54 @@ public class test_main {
 //		Matrix multtest = Mtxops.multiply(test_mtx, 4.24);
 //		System.out.println("Multmtx after mult: ");
 //		System.out.println(multtest.toString());
-		
-		Matrix A = new Matrix(2, 3);
-		A.setItem(1, 1, 1);
-		A.setItem(1, 2, 2);
-		A.setItem(1, 3, 3);
-		A.setItem(2, 1, 4);
-		A.setItem(2, 2, 2);
-		A.setItem(2, 3, 1);
-		Matrix B = new Matrix(3, 3);
+//		
+//		Matrix A = new Matrix(2, 3);
+//		A.setItem(1, 1, 1);
+//		A.setItem(1, 2, 2);
+//		A.setItem(1, 3, 3);
+//		A.setItem(2, 1, 4);
+//		A.setItem(2, 2, 2);
+//		A.setItem(2, 3, 1);
+		Matrix B = new Matrix(3, 4);
 		B.setItem(1, 1, 2);
-		B.setItem(1, 2, 4);
-		B.setItem(1, 3, 3);
+		B.setItem(1, 2, 2);
+		B.setItem(1, 3, 4);
+		B.setItem(1, 4, 12);
 		B.setItem(2, 1, 1);
-		B.setItem(2, 2, 2);
-		B.setItem(2, 3, 2);
-		B.setItem(3, 1, 2);
-		B.setItem(3, 2, 1);
-		B.setItem(3, 3, 3);
-		System.out.println(A.toString());
+		B.setItem(2, 2, 1);
+		B.setItem(2, 3, 1);
+		B.setItem(2, 4, 8);
+		B.setItem(3, 1, 3);
+		B.setItem(3, 2, 3);
+		B.setItem(3, 3, 2);
+		B.setItem(3, 4, 19);
 		System.out.println(B.toString());
-		Matrix C = Mtxops.multiply(A, B);
-		System.out.println(C.toString());
+		Matrix elimd = Eliminations.rowEchelonForm(B);
+		System.out.println(elimd.toString());
+//		System.out.println(A.toString());
+//		System.out.println(B.toString());
+//		Matrix C = Mtxops.multiply(A, B);
+//		System.out.println(C.toString());
+//		
+//		Matrix D = new Matrix(3, 2);
+//		D.setItem(1, 1, 3);
+//		D.setItem(1, 2, 2);
+//		D.setItem(2, 1, 4);
+//		D.setItem(2, 2, 1);
+//		D.setItem(3, 1, 5);
+//		D.setItem(3, 2, 6);
+//		System.out.println(D.toString());
+//		Matrix E = new Matrix(D);
+//		E.setItem(1, 1, 0);
+//		E.setItem(1, 2, 1);
+//		E.setItem(2, 1, 3);
+//		E.setItem(2, 2, 7);
+//		System.out.println(E.toString());
+//		Matrix reduced = Eliminations.rowEchelonForm(E);
+//		Matrix F = Mtxops.multiply(D, E);
+//		System.out.println(reduced.toString());
 		
-		Matrix D = new Matrix(3, 2);
-		D.setItem(1, 1, 3);
-		D.setItem(1, 2, 2);
-		D.setItem(2, 1, 4);
-		D.setItem(2, 2, 1);
-		D.setItem(3, 1, 5);
-		D.setItem(3, 2, 6);
-		System.out.println(D.toString());
-		Matrix E = new Matrix(2, 2);
-		E.setItem(1, 1, 4);
-		E.setItem(1, 2, 1);
-		E.setItem(2, 1, 3);
-		E.setItem(2, 2, 7);
-		System.out.println(E.toString());
-		Matrix F = Mtxops.multiply(D, E);
-		System.out.println(F.toString());
+		
 	}
 
 

@@ -89,6 +89,8 @@ public class test_main {
 		System.out.println(B.toString());
 		Matrix elimd = Eliminations.rowEchelonForm(B);
 		System.out.println(elimd.toString());
+		Matrix aug = new Matrix(B, elimd);
+		System.out.println(aug.toString());
 //		System.out.println(A.toString());
 //		System.out.println(B.toString());
 //		Matrix C = Mtxops.multiply(A, B);

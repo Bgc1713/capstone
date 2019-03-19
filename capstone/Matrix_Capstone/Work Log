@@ -17,3 +17,8 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  - Started work on gaussian elimination
  	- Got it completed, but it probably doesn't work on outliers such as 1x1 matrices. I was told code was expectedto be alpha quality so I won't worry too hard.
  	- I forgot to add multiply and divide row operations so I had to implement them real quick.
+ 	
+3-18-19:
+ - Created augmentation constructor for matrixes
+ 	- it can be debated that a separate "tools" class could be made for augmentation, but it makes more sense to "construct" matrixes with the actual constructor.
+ 	

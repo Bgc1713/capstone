@@ -47,6 +47,36 @@ public class Matrix {
 
 		
 	}
+	
+	/** 
+	 * The Matrix Augmentation constructor
+	 * @param A The matrix to be copied.
+	 */
+	public Matrix(Matrix A, Matrix B)
+	{
+		rows = A.getRows();
+		columns = A.getColumns() + B.getColumns();
+		for (int i = 0; i < rows; i++)
+		{
+			mtx.add(new ArrayList<Double>());
+			for(int j = 0; j < A.getColumns(); j++)
+			{
+				mtx.get(i).add(A.getItem(i + 1, j + 1));
+			}
+		}
+		
+		for (int i = 0; i < rows; i++)
+		{
+			mtx.add(new ArrayList<Double>());
+			for(int j = 0; j < B.getColumns(); j++)
+			{
+				mtx.get(i).add(B.getItem(i + 1, j + 1));
+			}
+		}
+
+		
+	}
+	
 	/**
 	 * Get the matrix represented as a string.
 	 * @return A string representation of the matrix.

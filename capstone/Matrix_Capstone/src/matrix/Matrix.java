@@ -326,6 +326,129 @@ public class Matrix {
 		return newMatrix;
 	}
 	
+	/** Multiplication of one matrix by a scalar (A * b = C)
+	 * @param factor the Matrix to be multiplied, Matrix A.
+	 * @param scalar the scalar constant to multiply with, scalar b.
+	 * @return the product Matrix, Matrix C.
+	 */
+	public Matrix multiply(Matrix factor, double scalar)
+	{
+		Matrix product = new Matrix(factor.getRows(), factor.getColumns());
+		for(int i = 1; i <= factor.getRows(); i++)
+		{
+			for(int j = 1; j <= factor.getColumns(); j++)
+			{
+				double thisLocationProduct = 0;
+				thisLocationProduct = (factor.getItem(i, j) * scalar);
+				product.setItem(i, j, thisLocationProduct);
+			}
+		}
+		return product;
+	}
+	
+	/** Multiplication of one matrix by a scalar (A * b = C)
+	 * @param factor the Matrix to be multiplied, Matrix A.
+	 * @param scalar the scalar constant to multiply with, scalar b.
+	 */
+	public void multiplyBy(double scalar)
+	{
+		for(int i = 1; i <= this.getRows(); i++)
+		{
+			for(int j = 1; j <= this.getColumns(); j++)
+			{
+				double thisLocationProduct = 0;
+				thisLocationProduct = (this.getItem(i, j) * scalar);
+				this.setItem(i, j, thisLocationProduct);
+			}
+		}
+	}
+	
+	/** Dot product of two matrixes, A * B = AB
+	 * @param multiplicand The second matrix multiplicand, Matrix B.
+	 * @return the product matrix, Matrix AB. (Will have A's rows and B's columns)
+	 */
+	public Matrix dotProduct(Matrix multiplicand)
+	{
+		Matrix product = new Matrix(this.getRows(), multiplicand.getColumns());
+		for(int i = 1; i <= product.getRows(); i++)
+		{
+			for(int j = 1; j <= product.getColumns(); j++)
+			{
+				double thisLocationTotal = 0;
+				for(int k = 1; k <= this.getColumns(); k++)
+				{
+					thisLocationTotal += this.getItem(i, k) * multiplicand.getItem(k, j);
+				}
+				product.setItem(i, j, thisLocationTotal);
+			}
+		}
+		
+		return product;
+	}
+	
+	
+	/**
+	 * Puts the Matrix into row-echelon form
+	 */
+	public void reduceToRowEchelonForm()
+	{
+		int leadingRow = this.getRows();
+		int leadingColumn = this.getColumns();
+		//Do the proper leading column and resulting elims for every row
+		int completedColumns = 0;
+		int completedRows = 0;
+		while(completedRows <= this.getRows() && completedColumns <= this.getColumns())
+		{
+			//find current leftmost leading row, used rows and columns instead of i and j for improved readability
+			//especially since this loop iterates over every row of a column before moving to a new column
+			int row = completedRows + 1;
+			int column = completedColumns + 1;
+			boolean foundLeading = false;
+			while(column <= this.getColumns() && !foundLeading)
+			{
+				while(row <= this.getRows() && !foundLeading)
+				{
+					if(this.getItem(row, column) != -0.0)
+					{
+						leadingRow = row;
+						leadingColumn = column;
+						foundLeading = true;
+					}
+					row++;
+				}
+				column++;
+			}
+			if(foundLeading)
+			{
+				this.swapRows(completedRows + 1, leadingRow);
+				this.divideRow(completedRows + 1, this.getItem(completedRows + 1, leadingColumn));
+				for(int i = completedRows + 2; i <= this.getRows(); i++)
+				{
+					double scalar = this.getItem(i, leadingColumn);
+					this.subtractFromRow(i, completedRows + 1, scalar);
+				}
+				completedRows++;
+			}
+			System.out.println("System after " + (completedColumns + 1) + " interations");
+			System.out.println(this.toString());
+			completedColumns++;
+		}
+		
+	}
+	
+	
+	/**
+	 * Finds the row-echelon form of the Matrix.
+	 * I really enjoy how I can just call the other reduction function with a copy of this matrix to return a reduced matrix
+	 * @return The row-echelon form of the matrix.
+	 */
+	public Matrix getRowEchelonForm()
+	{
+		Matrix result = new Matrix(this);
+		result.reduceToRowEchelonForm();
+		return result;
+	}
+	
 	
 }
 

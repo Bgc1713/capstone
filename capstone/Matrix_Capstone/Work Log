@@ -22,3 +22,11 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  - Created augmentation constructor for matrixes
  	- it can be debated that a separate "tools" class could be made for augmentation, but it makes more sense to "construct" matrixes with the actual constructor.
  	
+3-27-19
+ - Moved all matrix operations and reductions into matrix. My idea of static Mtxops class was wrong :(
+ 	- This really wasn't difficult to move back. It really demonstrates how even if the logic is in the wrong place, if it's sound logic, it will work anywhere.
+ - Started thinking about potential decorator uses? It seems most decorators are using an interface, which I really wouldn't want to implement when my Matrix work focuses on just doubles.
+ 	- Perhaps an interface wouldn't be hard? The interface would really only need constructor, setter, and getter as it's given things. Then I just say my current class extends it.
+ 	- If I were to create a decorator, my plan would be to make it so that a decorated Matrix contains an addition Matrix for things such as augmentation. Usually when you augment a matrix, it is important to be able to access just the augmented part.
+ 		- An assistant matrix would also be nice for LU factorization.
+ - Decorator doesn't seem like it would work, settled for template method perhaps.

@@ -5,7 +5,7 @@ package matrix;
 
 public class Mtxops {
 
-	/* Addition of two matrixes (A + B = C)
+	/** Addition of two matrixes (A + B = C)
 	 * @param addend1 The first addend, Matrix A.
 	 * @param addend2 The second addend, Matrix B.
 	 * @return The sum of the two addends, Matrix C.
@@ -31,7 +31,7 @@ public class Mtxops {
 	}
 	
 	
-	/* Subtraction of two matrixes (A - B = C)
+	/** Subtraction of two matrixes (A - B = C)
 	 * Another clever concept: Using addition to copy a matrix to a matrix of zeroes. Since the new matrix is 
 	 * already initialized on its own and filled with zeroes, using addition to copy is a way to sufficiently deep copy.
 	 * @param minuend The first matrix to subtract from, Matrix A.
@@ -58,7 +58,7 @@ public class Mtxops {
 		return difference;
 	}
 	
-	/* Multiplication of one matrix by a scalar (A * b = C)
+	/** Multiplication of one matrix by a scalar (A * b = C)
 	 * @param factor the Matrix to be multiplied, Matrix A.
 	 * @param scalar the scalar constant to multiply with, scalar b.
 	 * @return the product Matrix, Matrix C.
@@ -78,7 +78,7 @@ public class Mtxops {
 		return product;
 	}
 	
-	/* Multiplication of two matrixes, A * B = AB
+	/** Multiplication of two matrixes, A * B = AB
 	 * @param multiplier The first matrix multiplier, Matrix A.
 	 * @param multiplicand The second matrix multiplicand, Matrix B.
 	 * @return the product matrix, Matrix AB. (Will have A's rows and B's columns)

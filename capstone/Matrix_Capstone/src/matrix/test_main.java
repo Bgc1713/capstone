@@ -66,14 +66,15 @@ public class test_main {
 //		System.out.println("Multmtx after mult: ");
 //		System.out.println(multtest.toString());
 //		
-//		Matrix A = new Matrix(2, 3);
-//		A.setItem(1, 1, 1);
-//		A.setItem(1, 2, 2);
-//		A.setItem(1, 3, 3);
-//		A.setItem(2, 1, 4);
-//		A.setItem(2, 2, 2);
-//		A.setItem(2, 3, 1);
+		Matrix A = new Matrix(2, 3);
+		A.setItem(1, 1, 1);
+		A.setItem(1, 2, 2);
+		A.setItem(1, 3, 3);
+		A.setItem(2, 1, 4);
+		A.setItem(2, 2, 2);
+		A.setItem(2, 3, 1);
 		Matrix B = new Matrix(3, 4);
+
 		B.setItem(1, 1, 2);
 		B.setItem(1, 2, 2);
 		B.setItem(1, 3, 4);
@@ -86,11 +87,35 @@ public class test_main {
 		B.setItem(3, 2, 3);
 		B.setItem(3, 3, 2);
 		B.setItem(3, 4, 19);
+		Matrix C = new Matrix(B.getRowEchelonForm());
+//		Matrix B = new Matrix(3,3);
+//		B.setItem(1, 1, 2);
+//		B.setItem(1, 2, 4);
+//		B.setItem(1, 3, 3);
+//
+//		B.setItem(2, 1, 1);
+//		B.setItem(2, 2, 2);
+//		B.setItem(2, 3, 2);
+//
+//		B.setItem(3, 1, 2);
+//		B.setItem(3, 2, 1);
+//		B.setItem(3, 3, 3);
+
+//		Matrix C = A.dotProduct(B);
+//		System.out.println(C.toString());
+//		
+//		Matrix D = C.multiply(C, 2);
+//		System.out.println(D.toString());
+//		
+//		D.multiplyBy(2);
+//		System.out.println(D.toString());
+		B.reduceToRowEchelonForm();
 		System.out.println(B.toString());
-		Matrix elimd = Eliminations.rowEchelonForm(B);
-		System.out.println(elimd.toString());
-		Matrix aug = new Matrix(B, elimd);
-		System.out.println(aug.toString());
+		System.out.println(C.toString());
+//		Matrix elimd = Eliminations.rowEchelonForm(B);
+//		System.out.println(elimd.toString());
+//		Matrix aug = new Matrix(B, elimd);
+//		System.out.println(aug.toString());
 //		System.out.println(A.toString());
 //		System.out.println(B.toString());
 //		Matrix C = Mtxops.multiply(A, B);

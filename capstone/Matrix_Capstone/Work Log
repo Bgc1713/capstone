@@ -30,3 +30,11 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  	- If I were to create a decorator, my plan would be to make it so that a decorated Matrix contains an addition Matrix for things such as augmentation. Usually when you augment a matrix, it is important to be able to access just the augmented part.
  		- An assistant matrix would also be nice for LU factorization.
  - Decorator doesn't seem like it would work, settled for template method perhaps.
+ 
+ 4-3-19
+ - Created Gauss-Jordan eliminations (Both done to a matrix and retreived from a matrix)
+ 	- I was partially wrong on my assumption of "Just do normal gauss elimination and then do the numbers above leading ones."
+ 	- By doing so, I would have to create another complex algorithm that finds all leading ones (And deal with associated out-of-bounds problems)
+ 	- Basically you can do it in terms of eliminate then do more, but it's easier to just modify the original code to do it all at once.
+ 	- Also, it demonstrates how the way I would do it in the real world (Gauss elimination all the way, THEN remove numbers above leading ones) is complex to implement.
+ 		- Ironically, doing it the way this program does it in real life is possible, but seems harder to me.

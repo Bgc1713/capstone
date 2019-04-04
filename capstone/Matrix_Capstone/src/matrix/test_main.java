@@ -88,19 +88,30 @@ public class test_main {
 		B.setItem(3, 3, 2);
 		B.setItem(3, 4, 19);
 		Matrix C = new Matrix(B.getRowEchelonForm());
-//		Matrix B = new Matrix(3,3);
-//		B.setItem(1, 1, 2);
-//		B.setItem(1, 2, 4);
-//		B.setItem(1, 3, 3);
-//
-//		B.setItem(2, 1, 1);
-//		B.setItem(2, 2, 2);
-//		B.setItem(2, 3, 2);
-//
-//		B.setItem(3, 1, 2);
-//		B.setItem(3, 2, 1);
-//		B.setItem(3, 3, 3);
+		Matrix E = new Matrix(3,6);
+		E.setItem(1, 1, 0);
+		E.setItem(1, 2, 4);
+		E.setItem(1, 3, 2);
+		E.setItem(1, 4, 1);
+		E.setItem(1, 5, 0);
+		E.setItem(1, 6, 0);
+		
+		E.setItem(2, 1, 1);
+		E.setItem(2, 2, -2);
+		E.setItem(2, 3, 0);
+		E.setItem(2, 4, 0);
+		E.setItem(2, 5, 1);
+		E.setItem(2, 6, 0);
 
+		E.setItem(3, 1, 2);
+		E.setItem(3, 2, -1);
+		E.setItem(3, 3, 1);
+		E.setItem(3, 4, 0);
+		E.setItem(3, 5, 0);
+		E.setItem(3, 6, 1);
+		
+		E.reduceToReducedRowEchelonForm();
+		System.out.println(E.toString());
 //		Matrix C = A.dotProduct(B);
 //		System.out.println(C.toString());
 //		
@@ -112,6 +123,8 @@ public class test_main {
 		B.reduceToRowEchelonForm();
 		System.out.println(B.toString());
 		System.out.println(C.toString());
+		B.reduceToRowEchelonForm();
+		System.out.println(B.toString());
 //		Matrix elimd = Eliminations.rowEchelonForm(B);
 //		System.out.println(elimd.toString());
 //		Matrix aug = new Matrix(B, elimd);

@@ -399,7 +399,7 @@ public class Matrix {
 		int completedRows = 0;
 		while(completedRows <= this.getRows() && completedColumns <= this.getColumns())
 		{
-			//find current leftmost leading row, used rows and columns instead of i and j for improved readability
+			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
 			//especially since this loop iterates over every row of a column before moving to a new column
 			int row = completedRows + 1;
 			int column = completedColumns + 1;
@@ -408,7 +408,7 @@ public class Matrix {
 			{
 				while(row <= this.getRows() && !foundLeading)
 				{
-					if(this.getItem(row, column) != -0.0)
+					if(this.getItem(row, column) != 0)
 					{
 						leadingRow = row;
 						leadingColumn = column;
@@ -429,8 +429,8 @@ public class Matrix {
 				}
 				completedRows++;
 			}
-			System.out.println("System after " + (completedColumns + 1) + " interations");
-			System.out.println(this.toString());
+//			System.out.println("System after " + (completedColumns + 1) + " interations");
+//			System.out.println(this.toString());
 			completedColumns++;
 		}
 		
@@ -449,6 +449,67 @@ public class Matrix {
 		return result;
 	}
 	
+	/**
+	 * Reduces the matrix to reduced row-echelon form by gauss-jordan elimination.
+	 */
+	public void reduceToReducedRowEchelonForm()
+	{
+		int leadingRow = this.getRows();
+		int leadingColumn = this.getColumns();
+		//Do the proper leading column and resulting elims for every row
+		int completedColumns = 0;
+		int completedRows = 0;
+		while(completedRows <= this.getRows() && completedColumns <= this.getColumns())
+		{
+			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
+			//especially since this loop iterates over every row of a column before moving to a new column
+			int row = completedRows + 1;
+			int column = completedColumns + 1;
+			boolean foundLeading = false;
+			while(column <= this.getColumns() && !foundLeading)
+			{
+				while(row <= this.getRows() && !foundLeading)
+				{
+					if(this.getItem(row, column) != 0)
+					{
+						leadingRow = row;
+						leadingColumn = column;
+						foundLeading = true;
+					}
+					row++;
+				}
+				column++;
+			}
+			if(foundLeading)
+			{
+				this.swapRows(completedRows + 1, leadingRow);
+				this.divideRow(completedRows + 1, this.getItem(completedRows + 1, leadingColumn));
+				for(int i = 1; i <= this.getRows(); i++)
+				{
+					if(i != completedRows + 1)
+					{
+						double scalar = this.getItem(i, leadingColumn);
+						this.subtractFromRow(i, completedRows + 1, scalar);
+					}
+				}
+				completedRows++;
+			}
+			System.out.println("System after " + (completedColumns + 1) + " interations");
+			System.out.println(this.toString());
+			completedColumns++;
+		}
+		
+	}
+	/**
+	 * Gets the reduced row-echelon form of the matrix.
+	 * @return the reduced row-echelon form of the matrix
+	 */
+	public Matrix getReducedRowEchelonForm()
+	{
+		Matrix result = new Matrix(this);
+		result.reduceToReducedRowEchelonForm();
+		return result;
+	}
 	
 }
 

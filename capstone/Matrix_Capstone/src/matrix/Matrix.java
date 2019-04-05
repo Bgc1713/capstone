@@ -494,15 +494,15 @@ public class Matrix {
 				}
 				completedRows++;
 			}
-			System.out.println("System after " + (completedColumns + 1) + " interations");
-			System.out.println(this.toString());
+//			System.out.println("System after " + (completedColumns + 1) + " interations");
+//			System.out.println(this.toString());
 			completedColumns++;
 		}
 		
 	}
 	/**
 	 * Gets the reduced row-echelon form of the matrix.
-	 * @return the reduced row-echelon form of the matrix
+	 * @return The reduced row-echelon form of the matrix
 	 */
 	public Matrix getReducedRowEchelonForm()
 	{
@@ -510,6 +510,38 @@ public class Matrix {
 		result.reduceToReducedRowEchelonForm();
 		return result;
 	}
+	
+	/**
+	 * Gets the Inverse of a matrix.
+	 * @return The inverse of the matrix
+	 */
+	public void invert()
+	{
+		Matrix identity = new Matrix(this.getRows(), this.getColumns());
+		for (int i = 1; i <= identity.getColumns(); i++)
+		{
+			identity.setItem(i, i, 1);
+		}
+		Matrix augmented = new Matrix(this, identity);
+		augmented.reduceToReducedRowEchelonForm();
+
+		for (int i = 1; i <= this.getRows(); i++)
+		{
+			for (int j = 1; j <= this.getColumns(); j++)
+			{
+				this.setItem(i, j, augmented.getItem(i, j + this.getColumns()));
+			}
+		}
+	}
+	
+	public Matrix getInverse()
+	{
+		Matrix result = new Matrix(this);
+		result.invert();
+		return result;
+	}
+	
+	
 	
 }
 

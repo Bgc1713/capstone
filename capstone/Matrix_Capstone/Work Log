@@ -22,7 +22,7 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  - Created augmentation constructor for matrixes
  	- it can be debated that a separate "tools" class could be made for augmentation, but it makes more sense to "construct" matrixes with the actual constructor.
  	
-3-27-19
+3-27-19:
  - Moved all matrix operations and reductions into matrix. My idea of static Mtxops class was wrong :(
  	- This really wasn't difficult to move back. It really demonstrates how even if the logic is in the wrong place, if it's sound logic, it will work anywhere.
  - Started thinking about potential decorator uses? It seems most decorators are using an interface, which I really wouldn't want to implement when my Matrix work focuses on just doubles.
@@ -31,10 +31,18 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  		- An assistant matrix would also be nice for LU factorization.
  - Decorator doesn't seem like it would work, settled for template method perhaps.
  
- 4-3-19
+ 4-3-19:
  - Created Gauss-Jordan eliminations (Both done to a matrix and retreived from a matrix)
  	- I was partially wrong on my assumption of "Just do normal gauss elimination and then do the numbers above leading ones."
  	- By doing so, I would have to create another complex algorithm that finds all leading ones (And deal with associated out-of-bounds problems)
  	- Basically you can do it in terms of eliminate then do more, but it's easier to just modify the original code to do it all at once.
  	- Also, it demonstrates how the way I would do it in the real world (Gauss elimination all the way, THEN remove numbers above leading ones) is complex to implement.
  		- Ironically, doing it the way this program does it in real life is possible, but seems harder to me.
+ 		
+ 4-5-19:
+ - Created inversion functions
+ 	- These can be called on anything unfortunately, when really they should only be used for invertible matrices. 
+ 		- Cleanup on the many instances of "not checking if it's ok" is something I'll really have to deal with, but it becomes a question: Do I check in the method and return instantly if something isn't invertible, or do I just provide an "isInvertible" method so that anyone using the class can do the checking and call anyways.
+ 			- Could I do both? Check in my method, but provide the method so that any person using this class is able to check their Matrix before attempting to call and getting a resulting empty matrix? I like doing both the most.
+ 			
+ 			

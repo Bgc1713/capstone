@@ -462,7 +462,7 @@ public class Matrix {
 		while(completedRows <= this.getRows() && completedColumns <= this.getColumns())
 		{
 			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
-			//especially since this loop iterates over every row of a column before moving to a new column
+			//especially since this loop is rows nested in columns, rather than columns nested in rows like every other loop in the proram
 			int row = completedRows + 1;
 			int column = completedColumns + 1;
 			boolean foundLeading = false;
@@ -512,8 +512,7 @@ public class Matrix {
 	}
 	
 	/**
-	 * Gets the Inverse of a matrix.
-	 * @return The inverse of the matrix
+	 * Inverts the matrix.
 	 */
 	public void invert()
 	{
@@ -534,6 +533,10 @@ public class Matrix {
 		}
 	}
 	
+	/**
+	 * Gets the Inverse of the matrix.
+	 * @return The inverse of the matrix
+	 */
 	public Matrix getInverse()
 	{
 		Matrix result = new Matrix(this);
@@ -541,7 +544,56 @@ public class Matrix {
 		return result;
 	}
 	
+	private void doLUFactorization(Matrix L, Matrix U)
+	{
+//		L = new Matrix(this.getRows(), this.getColumns());
+//		U = new Matrix(this.getRows(), this.getColumns());
+		for (int i = 1; i <= this.getRows(); i++)
+		{
+			for(int k = i; k <= this.getRows(); k++)
+			{
+				int sum = 0;
+				for(int j = 1; j <= this.getRows(); j++)
+				{
+					sum += (L.getItem(i, j) * U.getItem(j, k));
+				}
+				U.setItem(i, k, this.getItem(i,k) - sum);
+			}
+			for (int k = i; k <= this.getColumns(); k++)
+			{
+				if(k == i)
+				{
+					L.setItem(i, i, 1);
+				}
+				else
+				{
+					int sum = 0;
+					for(int j = 1; j <= i; j++)
+					{
+						sum += (L.getItem(k, j) * U.getItem(j, i));
+					}
+					L.setItem(k, i, (this.getItem(k, i) - sum) / U.getItem(i, i) );
+				}
+			}
+				
+		}
+	}
 	
+	public Matrix getLDecomposition()
+	{
+		Matrix L = new Matrix(this.getRows(), this.getColumns());
+		Matrix U = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U);
+		return L;
+	}
+	
+	public Matrix getUDecomposition()
+	{
+		Matrix L = new Matrix(this.getRows(), this.getColumns());
+		Matrix U = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U);
+		return U;
+	}
 	
 }
 

@@ -45,4 +45,11 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  		- Cleanup on the many instances of "not checking if it's ok" is something I'll really have to deal with, but it becomes a question: Do I check in the method and return instantly if something isn't invertible, or do I just provide an "isInvertible" method so that anyone using the class can do the checking and call anyways.
  			- Could I do both? Check in my method, but provide the method so that any person using this class is able to check their Matrix before attempting to call and getting a resulting empty matrix? I like doing both the most.
  			
- 			
+ 4-7-19:
+  - Created the LU Decomposition functions
+  	- LU factorization was something that required me to use and existing algorithm (Doolittle's algorithm) to do. It's the only instance in this project where I had to use a new algorithm, rather than just converting my knowledge into code.
+    - LU factorization is interesting and relevant to Matrices, but I'm approaching the point where it feels like I'm creating tools/accessories that are bloating the Matrix class.
+    - The largest remaining thing that needs to be done in terms of matrix class methods is determinants, which isn't too hard. 
+    - Most other things we did in the Matrix Algebra course were things that I'm not sure would be suitible for coding, or if they are, they're better in small example programs showing me using a matrix to do stuff from class.
+    	- Those "toy" programs that show me using the matrix to do coursework are where I'm really "applying" the Matrix and class knowledge, but they tend to be overly simple or overly complex. 
+    

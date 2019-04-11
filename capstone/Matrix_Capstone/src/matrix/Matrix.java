@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Matrix {
 
 	private ArrayList<ArrayList<Double>> mtx = new ArrayList<ArrayList<Double>>();
-	int rows = 0;
-	int columns = 0;
-	double defaultNum = 0;
+	private int rows = 0;
+	private int columns = 0;
+	private static final double DEFAULT_NUM = 0;
 	
 	/**
 	 * The Matrix constructor, creates a matrix with all elements set to 0
@@ -23,7 +23,7 @@ public class Matrix {
 			mtx.add(new ArrayList<Double>());
 			for(int j = 0; j < columns; j++)
 			{
-				mtx.get(i).add(defaultNum);
+				mtx.get(i).add(DEFAULT_NUM);
 			}
 		}
 	}
@@ -557,7 +557,7 @@ public class Matrix {
 				{
 					sum += (L.getItem(i, j) * U.getItem(j, k));
 				}
-				U.setItem(i, k, this.getItem(i,k) - sum);
+				U.setItem(i, k, (this.getItem(i,k) - sum));
 			}
 			for (int k = i; k <= this.getColumns(); k++)
 			{
@@ -575,7 +575,6 @@ public class Matrix {
 					L.setItem(k, i, (this.getItem(k, i) - sum) / U.getItem(i, i) );
 				}
 			}
-				
 		}
 	}
 	
@@ -593,6 +592,21 @@ public class Matrix {
 		Matrix U = new Matrix(this.getRows(), this.getColumns());
         doLUFactorization(L, U);
 		return U;
+	}
+	
+	public double getDeterminant()
+	{
+		Matrix L = new Matrix(this.getRows(), this.getColumns());
+		Matrix U = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U);
+        double LDeterminant = 1;
+        double UDeterminant = 1;
+        for (int i = 1; i <= this.getRows(); i++)
+        {
+        	LDeterminant *=  L.getItem(i, i);
+        	UDeterminant *= U.getItem(i, i);
+        }
+        return (LDeterminant * UDeterminant);
 	}
 	
 }

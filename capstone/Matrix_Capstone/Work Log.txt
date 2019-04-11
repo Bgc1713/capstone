@@ -53,3 +53,6 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
     - Most other things we did in the Matrix Algebra course were things that I'm not sure would be suitible for coding, or if they are, they're better in small example programs showing me using a matrix to do stuff from class.
     	- Those "toy" programs that show me using the matrix to do coursework are where I'm really "applying" the Matrix and class knowledge, but they tend to be overly simple or overly complex. 
     
+ 4-10-19
+  - Turns out my LU decomposition function (Using doolittle's algorithm) actually may not work for all matrixes. I'm lead to believe it is due to how the doolittle algorithm works. It seems like doolittle's algorithm is not something that works for all matrices, though I am not sure. I'll likely reimplement LU factorization using either another algorithm, or the way it was done in class.
+  - Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)

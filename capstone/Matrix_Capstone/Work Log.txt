@@ -56,3 +56,5 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
  4-10-19
   - Turns out my LU decomposition function (Using doolittle's algorithm) actually may not work for all matrixes. I'm lead to believe it is due to how the doolittle algorithm works. It seems like doolittle's algorithm is not something that works for all matrices, though I am not sure. I'll likely reimplement LU factorization using either another algorithm, or the way it was done in class.
   - Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)
+  - I believe I'll unfortunately stick with the Doolittle algorithm as I didn't say LU factorization was a "must" on my capstone preapproval. This algorithm breaks with certain Matrices, but worked for all examples from class I had.
+  	 - This however means I'll need to rework the Determinant algorithm to utilize guassian elimination instead of LU determinants.

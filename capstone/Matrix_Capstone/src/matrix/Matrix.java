@@ -546,8 +546,6 @@ public class Matrix {
 	
 	private void doLUFactorization(Matrix L, Matrix U)
 	{
-//		L = new Matrix(this.getRows(), this.getColumns());
-//		U = new Matrix(this.getRows(), this.getColumns());
 		for (int i = 1; i <= this.getRows(); i++)
 		{
 			for(int k = i; k <= this.getRows(); k++)
@@ -572,12 +570,20 @@ public class Matrix {
 					{
 						sum += (L.getItem(k, j) * U.getItem(j, i));
 					}
+					assert U.getItem(i, i) != 0: "Unable to find LU factorization through Doolittle Method, 0 in U diagonal part of matrix.";
 					L.setItem(k, i, (this.getItem(k, i) - sum) / U.getItem(i, i) );
 				}
 			}
 		}
+		
+
+		
 	}
 	
+	/**
+	 * Returns the lower triangle decomposition on a matrix that does not require permutations to find an LU factorization.
+	 * @return the lower triangle matrix
+	 */
 	public Matrix getLDecomposition()
 	{
 		Matrix L = new Matrix(this.getRows(), this.getColumns());
@@ -585,7 +591,10 @@ public class Matrix {
         doLUFactorization(L, U);
 		return L;
 	}
-	
+	/**
+	 * Returns the upper triangle decomposition on a matrix that does not require permutations to find an LU factorization.
+	 * @return the upeer triangle matrix
+	 */
 	public Matrix getUDecomposition()
 	{
 		Matrix L = new Matrix(this.getRows(), this.getColumns());

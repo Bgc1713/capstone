@@ -58,3 +58,9 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
   - Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)
   - I believe I'll unfortunately stick with the Doolittle algorithm as I didn't say LU factorization was a "must" on my capstone preapproval. This algorithm breaks with certain Matrices, but worked for all examples from class I had.
   	 - This however means I'll need to rework the Determinant algorithm to utilize guassian elimination instead of LU determinants.
+ 
+ 4-11-19
+  - Created a different getDeterminant method, this method is much more stable as it uses gaussian elimination to find the determinant instead of LU factorization
+     - I learned of some ways to optimize all the other gaussian/gauss-jordan elimination algorithms because of this. There were times I would swap a row with itself, rather than checking to see if it's necessary. Its unlikely there was a lot of performance loss, but it's nice to do.
+     - With determinants completed, I have accomplished all "Must" items listed in my capstone preapproval form. There is some extra functionality I wish to add however, and there is a LOT of cleanup I can do to my Matrix class.	 
+  	 

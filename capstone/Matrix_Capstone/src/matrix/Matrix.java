@@ -420,7 +420,10 @@ public class Matrix {
 			}
 			if(foundLeading)
 			{
-				this.swapRows(completedRows + 1, leadingRow);
+				if(completedRows + 1 != leadingRow)
+				{
+					this.swapRows(completedRows + 1, leadingRow);
+				}
 				this.divideRow(completedRows + 1, this.getItem(completedRows + 1, leadingColumn));
 				for(int i = completedRows + 2; i <= this.getRows(); i++)
 				{
@@ -482,7 +485,10 @@ public class Matrix {
 			}
 			if(foundLeading)
 			{
-				this.swapRows(completedRows + 1, leadingRow);
+				if(completedRows + 1 != leadingRow)
+				{
+					this.swapRows(completedRows + 1, leadingRow);
+				}
 				this.divideRow(completedRows + 1, this.getItem(completedRows + 1, leadingColumn));
 				for(int i = 1; i <= this.getRows(); i++)
 				{
@@ -544,6 +550,18 @@ public class Matrix {
 		return result;
 	}
 	
+	public boolean isInvertible()
+	{
+		if (this.getDeterminant() != 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	private void doLUFactorization(Matrix L, Matrix U)
 	{
 		for (int i = 1; i <= this.getRows(); i++)
@@ -603,19 +621,78 @@ public class Matrix {
 		return U;
 	}
 	
+	/**
+	 * Finds the determinant of a matrix.
+	 * @return the determinant of the matrix
+	 */
 	public double getDeterminant()
 	{
-		Matrix L = new Matrix(this.getRows(), this.getColumns());
-		Matrix U = new Matrix(this.getRows(), this.getColumns());
-        doLUFactorization(L, U);
-        double LDeterminant = 1;
-        double UDeterminant = 1;
-        for (int i = 1; i <= this.getRows(); i++)
-        {
-        	LDeterminant *=  L.getItem(i, i);
-        	UDeterminant *= U.getItem(i, i);
-        }
-        return (LDeterminant * UDeterminant);
+		Matrix workMatrix = new Matrix(this);
+		int leadingRow = workMatrix.getRows();
+		int leadingColumn = workMatrix.getColumns();
+		//Do the proper leading column and resulting elims for every row
+		int completedColumns = 0;
+		int completedRows = 0;
+		boolean negativeDeterminant = false;
+		double determinant = 1;
+		
+		while(completedRows <= workMatrix.getRows() - 1 && completedColumns <= workMatrix.getColumns())
+		{
+			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
+			//especially since this loop iterates over every row of a column before moving to a new column
+			int row = completedRows + 1;
+			int column = completedColumns + 1;
+			boolean foundLeading = false;
+
+			while(column <= workMatrix.getColumns() && !foundLeading)
+			{
+				while(row <= workMatrix.getRows() && !foundLeading)
+				{
+					if(workMatrix.getItem(row, column) != 0)
+					{
+						leadingRow = row;
+						leadingColumn = column;
+						foundLeading = true;
+					}
+					row++;
+				}
+				column++;
+			}
+			if(foundLeading)
+			{
+				if(completedRows + 1 != leadingRow)
+				{
+					workMatrix.swapRows(completedRows + 1, leadingRow);
+					if (negativeDeterminant)
+					{
+						negativeDeterminant = false;
+					}
+					else
+					{
+						negativeDeterminant = true;
+					}
+				}
+				if(workMatrix.getItem(completedRows + 1, leadingColumn) != 1)
+				{
+					determinant *= (workMatrix.getItem(completedRows + 1, leadingColumn));
+					workMatrix.divideRow(completedRows + 1, workMatrix.getItem(completedRows + 1, leadingColumn));
+				}
+				for(int i = completedRows + 2; i <= workMatrix.getRows(); i++)
+				{
+					double scalar = workMatrix.getItem(i, leadingColumn);
+					workMatrix.subtractFromRow(i, completedRows + 1, scalar);
+				}
+				completedRows++;
+			}
+			completedColumns++;
+
+		}
+		if (negativeDeterminant)
+		{
+			determinant *= -1;
+		}
+		determinant *= workMatrix.getItem(workMatrix.getRows(), workMatrix.getColumns());
+		return determinant;
 	}
 	
 }

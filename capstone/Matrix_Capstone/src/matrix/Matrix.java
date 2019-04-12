@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Matrix {
 
-	private ArrayList<ArrayList<Double>> mtx = new ArrayList<ArrayList<Double>>();
+	private ArrayList<ArrayList<Double>> theMatrix = new ArrayList<ArrayList<Double>>();
 	private int rows = 0;
 	private int columns = 0;
 	private static final double DEFAULT_NUM = 0;
@@ -20,10 +20,10 @@ public class Matrix {
 		columns = totalColumns;
 		for (int i = 0; i < rows; i++)
 		{
-			mtx.add(new ArrayList<Double>());
+			theMatrix.add(new ArrayList<Double>());
 			for(int j = 0; j < columns; j++)
 			{
-				mtx.get(i).add(DEFAULT_NUM);
+				theMatrix.get(i).add(DEFAULT_NUM);
 			}
 		}
 	}
@@ -38,10 +38,10 @@ public class Matrix {
 		columns = A.getColumns();
 		for (int i = 0; i < rows; i++)
 		{
-			mtx.add(new ArrayList<Double>());
+			theMatrix.add(new ArrayList<Double>());
 			for(int j = 0; j < columns; j++)
 			{
-				mtx.get(i).add(A.getItem(i + 1, j + 1));
+				theMatrix.get(i).add(A.getItem(i + 1, j + 1));
 			}
 		}
 
@@ -58,19 +58,19 @@ public class Matrix {
 		columns = A.getColumns() + B.getColumns();
 		for (int i = 0; i < rows; i++)
 		{
-			mtx.add(new ArrayList<Double>());
+			theMatrix.add(new ArrayList<Double>());
 			for(int j = 0; j < A.getColumns(); j++)
 			{
-				mtx.get(i).add(A.getItem(i + 1, j + 1));
+				theMatrix.get(i).add(A.getItem(i + 1, j + 1));
 			}
 		}
 		
 		for (int i = 0; i < rows; i++)
 		{
-			mtx.add(new ArrayList<Double>());
+			theMatrix.add(new ArrayList<Double>());
 			for(int j = 0; j < B.getColumns(); j++)
 			{
-				mtx.get(i).add(B.getItem(i + 1, j + 1));
+				theMatrix.get(i).add(B.getItem(i + 1, j + 1));
 			}
 		}
 
@@ -86,7 +86,7 @@ public class Matrix {
 	  String mtxString = "";
 	  for (int i = 0; i < rows; i++)
 	  {
-		  mtxString += (mtx.get(i).toString());
+		  mtxString += (theMatrix.get(i).toString());
 		  mtxString += "\n";
 	  }
 	  return mtxString;
@@ -100,7 +100,7 @@ public class Matrix {
 	 */
 	public void setItem(int row, int column, double value)
 	{
-		mtx.get(row - 1).set(column - 1, value);
+		theMatrix.get(row - 1).set(column - 1, value);
 	}
 	
 	/**
@@ -111,7 +111,17 @@ public class Matrix {
 	 */
 	public double getItem(int row, int column)
 	{
-		return mtx.get(row - 1).get(column - 1);
+		return theMatrix.get(row - 1).get(column - 1);
+	}
+	/**
+	 * Determines if a given location is in bounds
+	 * @param row the row to check
+	 * @param column the column to check 
+	 * @return true if the row and column is within the Matrix, false otherwise
+	 */
+	public boolean isInBounds(int row, int column)
+	{
+		return(row <= this.getRows() && column <= this.getColumns());
 	}
 	
 	/**
@@ -138,7 +148,7 @@ public class Matrix {
 		ArrayList<Double> row = new ArrayList<Double>();
 		for (int i = 0; i < columns; i++)
 		{
-			row.add(mtx.get(rowNum - 1).get(i));
+			row.add(theMatrix.get(rowNum - 1).get(i));
 		}
 		return row;
 	}
@@ -151,9 +161,9 @@ public class Matrix {
 	public void swapRows(int row1, int row2)
 	{
 		ArrayList<Double> tempRow = new ArrayList<Double>();
-		tempRow = mtx.get(row1 - 1);
-		mtx.set(row1 - 1, mtx.get(row2 - 1));
-		mtx.set(row2 - 1, tempRow);
+		tempRow = theMatrix.get(row1 - 1);
+		theMatrix.set(row1 - 1, theMatrix.get(row2 - 1));
+		theMatrix.set(row2 - 1, tempRow);
 	}
 	
 	/* Row addition was a crazy challenge, because it becomes a question of "should I support this row operation"
@@ -176,7 +186,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) + mtx.get(sourceRow - 1).get(i)));
+			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) + theMatrix.get(sourceRow - 1).get(i)));
 		}
 	}
 	
@@ -190,7 +200,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) + (scalar* mtx.get(sourceRow - 1).get(i))));
+			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) + (scalar* theMatrix.get(sourceRow - 1).get(i))));
 		}
 	}
 	
@@ -204,7 +214,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) - mtx.get(sourceRow - 1).get(i)));
+			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) - theMatrix.get(sourceRow - 1).get(i)));
 		}
 	}
 	
@@ -218,7 +228,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, (mtx.get(targetRow - 1).get(i) - (scalar * mtx.get(sourceRow - 1).get(i))));
+			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) - (scalar * theMatrix.get(sourceRow - 1).get(i))));
 		}
 	}
 	
@@ -238,7 +248,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, ((mtx.get(targetRow - 1).get(i) * scalar)) );
+			theMatrix.get(targetRow - 1).set(i, ((theMatrix.get(targetRow - 1).get(i) * scalar)) );
 		}
 	}
 	
@@ -251,7 +261,7 @@ public class Matrix {
 	{
 		for (int i = 0; i < columns; i ++)
 		{
-			mtx.get(targetRow - 1).set(i, ((mtx.get(targetRow - 1).get(i) / scalar)) );
+			theMatrix.get(targetRow - 1).set(i, ((theMatrix.get(targetRow - 1).get(i) / scalar)) );
 		}
 	}	
 	/**
@@ -278,16 +288,15 @@ public class Matrix {
 	
 	/** 
 	 * Addition of two matrixes (C = A + B)
-	 * I consider it fairly clever to use the previous addition in a novel way to create a new matrix of
-	 * two other matrices being added together. See deprecated addition class to see more thoughts on it.
+	 * I consider it fairly novel to use the void Matrix addition to add two matrices into default value matrix.
 	 * @param source the matrix to be added to the matrix the function being called on
 	 */
 	public Matrix add(Matrix source)
 	{
-		Matrix newMatrix = new Matrix(source.getRows(), source.getColumns());
-		newMatrix.addTo(this);
-		newMatrix.addTo(source);
-		return newMatrix;
+		Matrix sum = new Matrix(source.getRows(), source.getColumns());
+		sum.addTo(this);
+		sum.addTo(source);
+		return sum;
 	}
 	
 	/**
@@ -312,43 +321,25 @@ public class Matrix {
 		}
 	}
 	
+	/*
+	 * Another clever concept: Using addition to copy a matrix to a matrix of zeroes. Since the new matrix is 
+	 * already initialized on its own and filled with zeroes, using addition to copy is viable. It also
+	 * prevents me from having to create two matrices to perform the subtraction.
+	 */
+	
 	/**
 	 *  Subtraction of two matrixes (C = A - B)
-	 * Another clever concept: Using addition to copy a matrix to a matrix of zeroes. Since the new matrix is 
-	 * already initialized on its own and filled with zeroes, using addition to copy is a way to sufficiently deep copy.
 	 * @param source Matrix B, the matrix to subtract from the matrix subtract is being called on
 	 */
 	public Matrix subtract(Matrix source)
 	{
-		Matrix newMatrix = new Matrix(source.getRows(), source.getColumns());
-		newMatrix.addTo(this);
-		newMatrix.subtractFrom(source);
-		return newMatrix;
+		Matrix difference = new Matrix(this);
+		difference.subtractFrom(source);
+		return difference;
 	}
 	
-	/** Multiplication of one matrix by a scalar (A * b = C)
-	 * @param factor the Matrix to be multiplied, Matrix A.
-	 * @param scalar the scalar constant to multiply with, scalar b.
-	 * @return the product Matrix, Matrix C.
-	 */
-	public Matrix multiply(Matrix factor, double scalar)
-	{
-		Matrix product = new Matrix(factor.getRows(), factor.getColumns());
-		for(int i = 1; i <= factor.getRows(); i++)
-		{
-			for(int j = 1; j <= factor.getColumns(); j++)
-			{
-				double thisLocationProduct = 0;
-				thisLocationProduct = (factor.getItem(i, j) * scalar);
-				product.setItem(i, j, thisLocationProduct);
-			}
-		}
-		return product;
-	}
-	
-	/** Multiplication of one matrix by a scalar (A * b = C)
-	 * @param factor the Matrix to be multiplied, Matrix A.
-	 * @param scalar the scalar constant to multiply with, scalar b.
+	/** Multiplication of the Matrix by a scalar.
+	 * @param scalar the scalar constant to multiply with.
 	 */
 	public void multiplyBy(double scalar)
 	{
@@ -362,6 +353,18 @@ public class Matrix {
 			}
 		}
 	}
+	
+	/** Get the multiplication of the Matrix by a scalar
+	 * @param scalar the scolar constant to multiply with.
+	 * @return the product Matrix, Matrix C.
+	 */
+	public Matrix multiply(double scalar)
+	{
+		Matrix product = new Matrix(this);
+		product.multiply(scalar);
+		return product;
+	}
+	
 	
 	/** Dot product of two matrixes, A * B = AB
 	 * @param multiplicand The second matrix multiplicand, Matrix B.
@@ -384,6 +387,17 @@ public class Matrix {
 		}
 		
 		return product;
+	}
+	
+	
+	/**
+	 * Determins if this matrix can be multiplied by a given other matrix.
+	 * @param multiplicand the matrix to check this matrix against.
+	 * @return true if the two matrices are compatible for a dot product, false otherwise
+	 */
+	public boolean canBeMultipliedWith(Matrix multiplicand)
+	{
+		return (this.getRows() == multiplicand.getColumns());
 	}
 	
 	
@@ -439,10 +453,9 @@ public class Matrix {
 		
 	}
 	
-	
+	//I really enjoy how I can just call the other reduction function with a copy of this matrix to return a reduced matrix
 	/**
 	 * Finds the row-echelon form of the Matrix.
-	 * I really enjoy how I can just call the other reduction function with a copy of this matrix to return a reduced matrix
 	 * @return The row-echelon form of the matrix.
 	 */
 	public Matrix getRowEchelonForm()
@@ -550,6 +563,10 @@ public class Matrix {
 		return result;
 	}
 	
+	/**
+	 * Tells whether or not a Matrix is invertible.
+	 * @return True if matrix is invertible, false otherwise
+	 */
 	public boolean isInvertible()
 	{
 		if (this.getDeterminant() != 0)
@@ -562,6 +579,11 @@ public class Matrix {
 		}
 	}
 	
+	/**
+	 * Performs LU factorization using Doolittle's method. Will not work for a Matrix that needs row swaps to be factorizable.
+	 * @param L Matrix to store the lower triangular result
+	 * @param U Matrix to store the upper triangular result
+	 */
 	private void doLUFactorization(Matrix L, Matrix U)
 	{
 		for (int i = 1; i <= this.getRows(); i++)
@@ -611,7 +633,7 @@ public class Matrix {
 	}
 	/**
 	 * Returns the upper triangle decomposition on a matrix that does not require permutations to find an LU factorization.
-	 * @return the upeer triangle matrix
+	 * @return the upper triangle matrix
 	 */
 	public Matrix getUDecomposition()
 	{

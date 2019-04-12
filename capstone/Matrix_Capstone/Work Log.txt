@@ -53,14 +53,18 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
     - Most other things we did in the Matrix Algebra course were things that I'm not sure would be suitible for coding, or if they are, they're better in small example programs showing me using a matrix to do stuff from class.
     	- Those "toy" programs that show me using the matrix to do coursework are where I'm really "applying" the Matrix and class knowledge, but they tend to be overly simple or overly complex. 
     
- 4-10-19
+ 4-10-19:
   - Turns out my LU decomposition function (Using doolittle's algorithm) actually may not work for all matrixes. I'm lead to believe it is due to how the doolittle algorithm works. It seems like doolittle's algorithm is not something that works for all matrices, though I am not sure. I'll likely reimplement LU factorization using either another algorithm, or the way it was done in class.
   - Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)
   - I believe I'll unfortunately stick with the Doolittle algorithm as I didn't say LU factorization was a "must" on my capstone preapproval. This algorithm breaks with certain Matrices, but worked for all examples from class I had.
   	 - This however means I'll need to rework the Determinant algorithm to utilize guassian elimination instead of LU determinants.
  
- 4-11-19
+ 4-11-19:
   - Created a different getDeterminant method, this method is much more stable as it uses gaussian elimination to find the determinant instead of LU factorization
      - I learned of some ways to optimize all the other gaussian/gauss-jordan elimination algorithms because of this. There were times I would swap a row with itself, rather than checking to see if it's necessary. Its unlikely there was a lot of performance loss, but it's nice to do.
      - With determinants completed, I have accomplished all "Must" items listed in my capstone preapproval form. There is some extra functionality I wish to add however, and there is a LOT of cleanup I can do to my Matrix class.	 
-  	 
+     
+ 4-12-19:
+  - Fixed up Mtxops class so that it provides a set of static methods to use for Matrix operations. This class will be helpful for people more familiar with procedural coding. It takes little work to add, but adds a seperate interface that may be more intuitive for some to use.
+  - Created verification methods in the Matrix class so that people can check if a location is in bounds of the matrix, or if two matrices can be multiplied with eachother.
+  	 - Professor Matthews reminded me about "design by contract", and that my methods don't have to work if a user provides invalid input, and dont even necessarily have to handle invalid input. However, it is reasonable to provide methods so that a user can check their input before using a relevant method.

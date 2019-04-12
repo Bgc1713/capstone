@@ -1,6 +1,9 @@
 package matrix;
 
-/* A class used for performing matrix operations, similar to the default Math class
+/* A class that provides static methods for performing matrix operations, similar to the default Math class
+ * While using static methods does not follow OOP conventions, it provides a way for more procedurally oriented people
+ * to work with my class in a friendlier and more intuitive way. It takes little work to create a class like this anyways,
+ * as the methods basically act as a wrapper for calling the real methods in the Matrix class.
  */
 
 public class Mtxops {
@@ -12,22 +15,7 @@ public class Mtxops {
 	 */
 	public static Matrix add (Matrix addend1, Matrix addend2)
 	{
-		Matrix sum = new Matrix (addend1.getRows(), addend2.getColumns());
-		
-		if ( (addend1.getRows() == addend2.getRows()) && (addend1.getColumns() == addend2.getColumns()) )
-		{
-			for(int i = 1; i <= addend1.getRows(); i++)
-			{
-				for(int j = 1; j <= addend1.getColumns(); j++)
-				{
-					double thisLocationSum = 0;
-					thisLocationSum = addend1.getItem(i, j) + addend2.getItem(i, j);
-					sum.setItem(i, j, thisLocationSum);
-				}
-			}
-		}
-		
-		return sum;
+		return addend1.add(addend2);
 	}
 	
 	
@@ -40,22 +28,7 @@ public class Mtxops {
 	 */
 	public static Matrix subtract(Matrix minuend, Matrix subtrahend)
 	{
-		Matrix difference = new Matrix(minuend.getRows(), minuend.getColumns());
-		difference = add(difference, minuend);
-		
-		if ( (minuend.getRows() == subtrahend.getRows()) && (minuend.getColumns() == subtrahend.getColumns()) )
-		{
-			for(int i = 1; i <= minuend.getRows(); i++)
-			{
-				for(int j = 1; j <= minuend.getColumns(); j++)
-				{
-					double thisLocationDifference = 0;
-					thisLocationDifference = minuend.getItem(i, j) - subtrahend.getItem(i, j);
-					difference.setItem(i, j, thisLocationDifference);
-				}
-			}
-		}
-		return difference;
+		return minuend.subtract(subtrahend);
 	}
 	
 	/** Multiplication of one matrix by a scalar (A * b = C)
@@ -65,17 +38,7 @@ public class Mtxops {
 	 */
 	public static Matrix multiply(Matrix factor, double scalar)
 	{
-		Matrix product = new Matrix(factor.getRows(), factor.getColumns());
-		for(int i = 1; i <= factor.getRows(); i++)
-		{
-			for(int j = 1; j <= factor.getColumns(); j++)
-			{
-				double thisLocationProduct = 0;
-				thisLocationProduct = (factor.getItem(i, j) * scalar);
-				product.setItem(i, j, thisLocationProduct);
-			}
-		}
-		return product;
+		return factor.multiply(scalar);
 	}
 	
 	/** Multiplication of two matrixes, A * B = AB
@@ -85,20 +48,6 @@ public class Mtxops {
 	 */
 	public static Matrix multiply(Matrix multiplier, Matrix multiplicand)
 	{
-		Matrix product = new Matrix(multiplier.getRows(), multiplicand.getColumns());
-		for(int i = 1; i <= product.getRows(); i++)
-		{
-			for(int j = 1; j <= product.getColumns(); j++)
-			{
-				double thisLocationTotal = 0;
-				for(int k = 1; k <= multiplier.getColumns(); k++)
-				{
-					thisLocationTotal += multiplier.getItem(i, k) * multiplicand.getItem(k, j);
-				}
-				product.setItem(i, j, thisLocationTotal);
-			}
-		}
-		
-		return product;
+		return multiplier.dotProduct(multiplicand);
 	}
 }

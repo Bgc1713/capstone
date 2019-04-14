@@ -361,7 +361,7 @@ public class Matrix {
 	public Matrix multiply(double scalar)
 	{
 		Matrix product = new Matrix(this);
-		product.multiply(scalar);
+		product.multiplyBy(scalar);
 		return product;
 	}
 	

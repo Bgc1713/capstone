@@ -116,6 +116,7 @@ public class test_main {
 			selection = input.nextLine();
 			if(selection.equals("n") || selection.equals("N"))
 			{
+				input.close();
 				System.exit(0);
 			}
 			System.out.print("Do you want to use the same matrix? Y/N: ");

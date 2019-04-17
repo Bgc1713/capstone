@@ -74,3 +74,7 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
   - I'm left with the question of is I should create other "test" programs that demonstrate the usage of matrices to show some of the applications we used in my Matrix Algebra class.
   	 - These would be Markov chains, system of equations, span, and independence.
   - Created program to test for span, will work on linear independence next.
+ 
+ 4-16-19
+  - Created program to test for linear independence
+  - Drastically improved how all programs recieve input (checks for both yes and no, not just yes or just no, asks again if no valid input is received for text responses)

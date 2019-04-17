@@ -2,6 +2,12 @@ package matrix;
 
 import java.util.ArrayList;
 
+/**
+ * A class representing a Matrix, and the operations that can be performed on/by a Matrix.
+ * @author Brendan Caudill
+ * @version 4-16-18
+ */
+
 public class Matrix {
 
 	private ArrayList<ArrayList<Double>> theMatrix = new ArrayList<ArrayList<Double>>();
@@ -84,7 +90,7 @@ public class Matrix {
 	public String toString()
 	{
 	  String mtxString = "";
-	  for (int i = 0; i < rows; i++)
+	  for (int i = 0; i < this.getRows(); i++)
 	  {
 		  mtxString += (theMatrix.get(i).toString());
 		  mtxString += "\n";
@@ -142,16 +148,6 @@ public class Matrix {
 		return columns;
 	}
 	
-	//This may not even be used since rowops don't use this function.
-	public ArrayList<Double> getRow (int rowNum)
-	{
-		ArrayList<Double> row = new ArrayList<Double>();
-		for (int i = 0; i < columns; i++)
-		{
-			row.add(theMatrix.get(rowNum - 1).get(i));
-		}
-		return row;
-	}
 	
 	/**
 	 * Swap two rows in a matrix.
@@ -166,17 +162,7 @@ public class Matrix {
 		theMatrix.set(row2 - 1, tempRow);
 	}
 	
-	/* Row addition was a crazy challenge, because it becomes a question of "should I support this row operation"
-	 * due to how convenient a single row addition can be for gaussian elimination. In preparation, I created a "getRow"
-	 * method failing to realize that if everything is within the base Matrix class, getRow isn't even usable, however
-	 * I have the matrix in its base 2d arraylist form, meaning I can just add them together like this
-	 * 
-	 * As I soon consider doing multiplication of rows (Which is equivalent to repeated adds, it becomes a question 
-	 * of "Do I code this like I would work it by hand, or do easier code that accomplishes the same end result?"
-	 * 
-	 * I also realized that since row operations are only ever done in the context of one matrix, creating public methods 
-	 * that aid in row operation are completely useless, as I'm writing code to be used in the ONE place it isn't helpful.
-	 */
+	
 	/**
 	 * A row addition operation.
 	 * @param targetRow The row to add to.
@@ -184,11 +170,12 @@ public class Matrix {
 	 */
 	public void addToRow(int targetRow, int sourceRow)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) + theMatrix.get(sourceRow - 1).get(i)));
+			this.setItem(targetRow, i, (this.getItem(sourceRow, i) + this.getItem(targetRow, i)) );
 		}
 	}
+	
 	
 	/**
 	 * A row addition operation with a scalar.
@@ -198,11 +185,12 @@ public class Matrix {
 	 */
 	public void addToRow(int targetRow, int sourceRow, double scalar)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) + (scalar* theMatrix.get(sourceRow - 1).get(i))));
+			this.setItem(targetRow, i, (this.getItem(targetRow, i) + (scalar * this.getItem(sourceRow, i)) ) );
 		}
 	}
+	
 	
 	/* So you add TO things when they're the target, but subtract FROM things when they're the target */
 	/**
@@ -212,9 +200,9 @@ public class Matrix {
 	 */
 	public void subtractFromRow(int targetRow, int sourceRow)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) - theMatrix.get(sourceRow - 1).get(i)));
+			this.setItem(targetRow, i, (this.getItem(targetRow, i) - this.getItem(sourceRow, i)));
 		}
 	}
 	
@@ -226,9 +214,9 @@ public class Matrix {
 	 */
 	public void subtractFromRow(int targetRow, int sourceRow, double scalar)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, (theMatrix.get(targetRow - 1).get(i) - (scalar * theMatrix.get(sourceRow - 1).get(i))));
+			this.setItem(targetRow, i, (this.getItem(targetRow, i) - (scalar * this.getItem(sourceRow, i))));
 		}
 	}
 	
@@ -237,6 +225,7 @@ public class Matrix {
 	 * from using the setters and getters (It also means I'm not constantly reusing arrayList.set/get)
 	 * 
 	 * However, using setItem/getItem DOES require me to add 1 to i and j before passing them.
+	 * Or just set i and j to one at the start
 	 */
 	
 	/**
@@ -246,9 +235,9 @@ public class Matrix {
 	 */
 	public void multiplyRow(int targetRow, double scalar)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, ((theMatrix.get(targetRow - 1).get(i) * scalar)) );
+			this.setItem(targetRow, i, this.getItem(targetRow, i) * scalar);
 		}
 	}
 	
@@ -259,9 +248,9 @@ public class Matrix {
 	 */
 	public void divideRow(int targetRow, double scalar)
 	{
-		for (int i = 0; i < columns; i ++)
+		for (int i = 1; i <= this.getColumns(); i ++)
 		{
-			theMatrix.get(targetRow - 1).set(i, ((theMatrix.get(targetRow - 1).get(i) / scalar)) );
+			this.setItem(targetRow, i, this.getItem(targetRow, i) / scalar);
 		}
 	}	
 	/**
@@ -270,17 +259,13 @@ public class Matrix {
 	 */
 	public void addTo(Matrix source)
 	{
-		if ( (source.getRows() == rows) && (source.getColumns() == columns) )
+		if ( (source.getRows() == this.getRows()) && (source.getColumns() == this.getColumns()) )
 		{
-			for(int i = 0; i < rows; i++)
+			for(int i = 1; i <= this.getRows(); i++)
 			{
-				for(int j = 0; j < columns; j++)
+				for(int j = 1; j <= this.getColumns(); j++)
 				{
-					int thisRow = i + 1;
-					int thisColumn = j + 1;
-					double thisLocationResult = 0;
-					thisLocationResult = source.getItem(thisRow, thisColumn) + this.getItem(thisRow, thisColumn);
-					this.setItem(thisRow, thisColumn, thisLocationResult);
+					this.setItem(i, j, (this.getItem(i, j) + source.getItem(i, j)));
 				}
 			}
 		}
@@ -305,17 +290,13 @@ public class Matrix {
 	 */
 	public void subtractFrom(Matrix source)
 	{
-		if ( (source.getRows() == rows) && (source.getColumns() == columns) )
+		if ( (source.getRows() == this.getRows()) && (source.getColumns() == this.getColumns()) )
 		{
-			for(int i = 0; i < rows; i++)
+			for(int i = 1; i <= this.getRows(); i++)
 			{
-				for(int j = 0; j < columns; j++)
+				for(int j = 1; j <= this.getColumns(); j++)
 				{
-					int thisRow = i + 1;
-					int thisColumn = j + 1;
-					double thisLocationResult = 0;
-					thisLocationResult = this.getItem(thisRow, thisColumn) - source.getItem(thisRow, thisColumn);
-					this.setItem(thisRow, thisColumn, thisLocationResult);
+					this.setItem(i, j, (this.getItem(i, j) - source.getItem(i, j)));
 				}
 			}
 		}
@@ -338,6 +319,11 @@ public class Matrix {
 		return difference;
 	}
 	
+	public boolean hasSameDimensions(Matrix source)
+	{
+		return ( (this.getRows() == source.getRows()) && (this.getColumns() == source.getColumns()) );
+	}
+	
 	/** Multiplication of the Matrix by a scalar.
 	 * @param scalar the scalar constant to multiply with.
 	 */
@@ -347,9 +333,7 @@ public class Matrix {
 		{
 			for(int j = 1; j <= this.getColumns(); j++)
 			{
-				double thisLocationProduct = 0;
-				thisLocationProduct = (this.getItem(i, j) * scalar);
-				this.setItem(i, j, thisLocationProduct);
+				this.setItem(i, j, (this.getItem(i, j) * scalar));
 			}
 		}
 	}
@@ -446,8 +430,6 @@ public class Matrix {
 				}
 				completedRows++;
 			}
-//			System.out.println("System after " + (completedColumns + 1) + " interations");
-//			System.out.println(this.toString());
 			completedColumns++;
 		}
 		
@@ -513,8 +495,7 @@ public class Matrix {
 				}
 				completedRows++;
 			}
-//			System.out.println("System after " + (completedColumns + 1) + " interations");
-//			System.out.println(this.toString());
+
 			completedColumns++;
 		}
 		

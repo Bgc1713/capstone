@@ -1,9 +1,10 @@
 package matrix;
 
-/* A class that provides static methods for performing matrix operations, similar to the default Math class
- * While using static methods does not follow OOP conventions, it provides a way for more procedurally oriented people
- * to work with my class in a friendlier and more intuitive way. It takes little work to create a class like this anyways,
- * as the methods basically act as a wrapper for calling the real methods in the Matrix class.
+/** A class that provides static methods for performing matrix operations, similar to the default Math class
+ * While using static methods does not follow OOP conventions, it provides a way for people only familiar with procedural programming
+ * to work with the Matrix class in a friendlier and more intuitive way.
+ * @author Brendan Caudill
+ * @version 4-17-19
  */
 
 public class Mtxops {

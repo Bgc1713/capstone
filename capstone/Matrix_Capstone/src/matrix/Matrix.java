@@ -3,9 +3,10 @@ package matrix;
 import java.util.ArrayList;
 
 /**
- * A class representing a Matrix, and the operations that can be performed on/by a Matrix.
+ * A class representing a Matrix, the operations that can either be used by a Matrix or on a Matrix, 
+ * and the different forms or decompositions that a Matrix can have.
  * @author Brendan Caudill
- * @version 4-16-18
+ * @version 4-17-19
  */
 
 public class Matrix {
@@ -97,6 +98,18 @@ public class Matrix {
 	  }
 	  return mtxString;
 	}
+
+	/* setItem and getItem are frequently used by every other method in the matrix class, is it best for a class to interact
+	 * with itself through setters and getters? I don't recall from CS260 what the best practice is.
+	 * 
+	 * I could interact directly with the arrayList instead of setItem and getItem. However readability benefits a LOT
+	 * from using the setters and getters (It also means I'm not constantly reusing arrayList.set/get)
+	 * 
+	 * However, using setItem/getItem DOES require me to consider that i and j start at one when creating loops.
+	 * Overall, the readability improves, especially since interacts with other matrices do require using the setters and getters.
+	 * A matrix interacting with itself is easier to read when using "this.getItem", it also produces more uniform practices and code.
+	 */
+	
 	
 	/**
 	 * Sets the value of a specific location in the matrix.
@@ -220,14 +233,7 @@ public class Matrix {
 		}
 	}
 	
-	/* This brings up an interesting question, is it wise to create one method that uses an objects other methods?
-	 * I could interact directly with the arrayList instead of setItem and getItem. However readability benefits a LOT
-	 * from using the setters and getters (It also means I'm not constantly reusing arrayList.set/get)
-	 * 
-	 * However, using setItem/getItem DOES require me to add 1 to i and j before passing them.
-	 * Or just set i and j to one at the start
-	 */
-	
+
 	/**
 	 * Multiply a row by a scalar constant
 	 * @param targetRow The row to multiply.
@@ -255,7 +261,7 @@ public class Matrix {
 	}	
 	/**
 	 * Addition to a matrix (A = A + B, plus-equals)
-	 * @param source the matrix that will be added to the matrix this function is being called from
+	 * @param source the matrix to add to this matrix
 	 */
 	public void addTo(Matrix source)
 	{
@@ -274,7 +280,7 @@ public class Matrix {
 	/** 
 	 * Addition of two matrixes (C = A + B)
 	 * I consider it fairly novel to use the void Matrix addition to add two matrices into default value matrix.
-	 * @param source the matrix to be added to the matrix the function being called on
+	 * @param source the matrix to sum with this matrix
 	 */
 	public Matrix add(Matrix source)
 	{
@@ -285,8 +291,8 @@ public class Matrix {
 	}
 	
 	/**
-	 *  Subraction from a matrix (A = A - B, minus-equals)
-	 * @param source Matrix B, The matrix to subtract from the matrix subtractFrom is being called on)
+	 *  Subtraction from a matrix (A = A - B, minus-equals)
+	 * @param source Matrix B, The matrix to subtract from this matrix
 	 */
 	public void subtractFrom(Matrix source)
 	{
@@ -310,7 +316,7 @@ public class Matrix {
 	
 	/**
 	 *  Subtraction of two matrixes (C = A - B)
-	 * @param source Matrix B, the matrix to subtract from the matrix subtract is being called on
+	 * @param source Matrix B, the matrix to subtract from this matrix
 	 */
 	public Matrix subtract(Matrix source)
 	{
@@ -319,6 +325,11 @@ public class Matrix {
 		return difference;
 	}
 	
+	/**
+	 * Determines if the instance of matrix has the same dimensions of another provided matrix.
+	 * @param source the matrix to compare to
+	 * @return true if the matrices have the same dimensions, false otherwise
+	 */
 	public boolean hasSameDimensions(Matrix source)
 	{
 		return ( (this.getRows() == source.getRows()) && (this.getColumns() == source.getColumns()) );
@@ -397,8 +408,7 @@ public class Matrix {
 		int completedRows = 0;
 		while(completedRows <= this.getRows() && completedColumns <= this.getColumns())
 		{
-			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
-			//especially since this loop iterates over every row of a column before moving to a new column
+			//Used rows and columns instead of i and j to improve readability, since this algorithm is column-first
 			int row = completedRows + 1;
 			int column = completedColumns + 1;
 			boolean foundLeading = false;
@@ -434,8 +444,7 @@ public class Matrix {
 		}
 		
 	}
-	
-	//I really enjoy how I can just call the other reduction function with a copy of this matrix to return a reduced matrix
+
 	/**
 	 * Finds the row-echelon form of the Matrix.
 	 * @return The row-echelon form of the matrix.
@@ -565,63 +574,101 @@ public class Matrix {
 	 * @param L Matrix to store the lower triangular result
 	 * @param U Matrix to store the upper triangular result
 	 */
-	private void doLUFactorization(Matrix L, Matrix U)
+	private void doLUFactorization(Matrix L, Matrix U, Matrix P)
 	{
-		for (int i = 1; i <= this.getRows(); i++)
+		//Initialize permutation identity matrix with diagonal ones
+		for(int i = 1; i <= L.getRows(); i++)
 		{
-			for(int k = i; k <= this.getRows(); k++)
-			{
-				int sum = 0;
-				for(int j = 1; j <= this.getRows(); j++)
-				{
-					sum += (L.getItem(i, j) * U.getItem(j, k));
-				}
-				U.setItem(i, k, (this.getItem(i,k) - sum));
-			}
-			for (int k = i; k <= this.getColumns(); k++)
-			{
-				if(k == i)
-				{
-					L.setItem(i, i, 1);
-				}
-				else
-				{
-					int sum = 0;
-					for(int j = 1; j <= i; j++)
-					{
-						sum += (L.getItem(k, j) * U.getItem(j, i));
-					}
-					assert U.getItem(i, i) != 0: "Unable to find LU factorization through Doolittle Method, 0 in U diagonal part of matrix.";
-					L.setItem(k, i, (this.getItem(k, i) - sum) / U.getItem(i, i) );
-				}
-			}
+			P.setItem(i, i, 1);
 		}
-		
-
-		
+		int leadingRow = U.getRows();
+		int leadingColumn = U.getColumns();
+		//Do the proper leading column and resulting elims for every row
+		int completedColumns = 0;
+		int completedRows = 0;
+		while(completedRows <= U.getRows() && completedColumns <= U.getColumns())
+		{
+			//Find current leftmost leading row, used rows and columns variable names instead of i and j for improved readability
+			//especially since this loop iterates over every row of a column before moving to a new column
+			int row = completedRows + 1;
+			int column = completedColumns + 1;
+			boolean foundLeading = false;
+			while(column <= U.getColumns() && !foundLeading)
+			{
+				while(row <= U.getRows() && !foundLeading)
+				{
+					if(U.getItem(row, column) != 0)
+					{
+						leadingRow = row;
+						leadingColumn = column;
+						foundLeading = true;
+					}
+					row++;
+				}
+				column++;
+			}
+			if(foundLeading)
+			{
+				//Swap rows if needed, and make the same swap in every Matrix
+				if(completedRows + 1 != leadingRow)
+				{
+					L.swapRows(completedRows + 1, leadingRow);
+					U.swapRows(completedRows + 1, leadingRow);
+					P.swapRows(completedRows + 1, leadingRow);
+				}
+				for(int i = completedRows + 2; i <= U.getRows(); i++)
+				{
+					double scalar = U.getItem(i, leadingColumn)/U.getItem(completedRows + 1, leadingColumn);
+					U.subtractFromRow(i, completedRows + 1, scalar);
+					L.setItem(i, leadingColumn, scalar);
+				}
+				completedRows++;
+			}
+			completedColumns++;
+		}
+		//Put diagonal ones into the lower diagonal matrix
+		for(int i = 1; i <= L.getRows(); i++)
+		{
+			L.setItem(i, i, 1);
+		}
 	}
 	
 	/**
-	 * Returns the lower triangle decomposition on a matrix that does not require permutations to find an LU factorization.
-	 * @return the lower triangle matrix
+	 * Returns the lower triangular decomposition on a matrix.
+	 * @return the lower triangular matrix
 	 */
 	public Matrix getLDecomposition()
 	{
 		Matrix L = new Matrix(this.getRows(), this.getColumns());
-		Matrix U = new Matrix(this.getRows(), this.getColumns());
-        doLUFactorization(L, U);
+		Matrix U = new Matrix(this);		
+		Matrix P = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U, P);
 		return L;
 	}
 	/**
-	 * Returns the upper triangle decomposition on a matrix that does not require permutations to find an LU factorization.
-	 * @return the upper triangle matrix
+	 * Returns the upper triangular decomposition on a matrix.
+	 * @return the upper triangular matrix
 	 */
 	public Matrix getUDecomposition()
 	{
 		Matrix L = new Matrix(this.getRows(), this.getColumns());
-		Matrix U = new Matrix(this.getRows(), this.getColumns());
-        doLUFactorization(L, U);
+		Matrix U = new Matrix(this);
+		Matrix P = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U, P);
 		return U;
+	}
+	
+	/**
+	 * Returns the permutation matrix for the LU decomposition of this matrix.
+	 * @return the permutation matrix
+	 */
+	public Matrix getPermutationMatrix()
+	{
+		Matrix L = new Matrix(this.getRows(), this.getColumns());
+		Matrix U = new Matrix(this);
+		Matrix P = new Matrix(this.getRows(), this.getColumns());
+        doLUFactorization(L, U, P);
+        return P;
 	}
 	
 	/**

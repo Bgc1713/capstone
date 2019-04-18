@@ -9,7 +9,7 @@ import matrix.Matrix;
  * A program used to demonstrate the usage of the Matrix class to perform many different matrix operations.
  * This program assumes all input is valid.
  * @author Brendan Caudill
- * @version 4-16-18
+ * @version 4-17-19
  */
 public class Tester {
 
@@ -47,7 +47,7 @@ public class Tester {
 			System.out.println("Your matrix is:");
 			System.out.println(mtx.toString());
 			System.out.println("What would you like to do with this matrix?");
-			System.out.println("Add(a), Subtract(s), Multiply with a scalar(m), Dot with another Matrix(d), Gaussian Elimination(g), Gauss-Jordan Elimination(gj), get determinant(det), or get inverse(i)");
+			System.out.println("Add(a), Subtract(s), Multiply with a scalar(m), Dot with another Matrix(d), Gaussian Elimination(g), Gauss-Jordan Elimination(gj), get determinant(det), get inverse(i), or get LU factorization(lu)");
 			
 			hasResponded = false;
 			while(!hasResponded)
@@ -120,6 +120,14 @@ public class Tester {
 						case "det":
 							hasResponded = true;
 							System.out.println("The determinant of \n" + mtx.toString() + "is " + mtx.getDeterminant());
+							break;
+						
+						case "lu":
+							hasResponded = true;
+							System.out.println("Out of \n" + mtx.toString());
+							System.out.println("The lower triangular representation is: \n" + mtx.getLDecomposition().toString());
+							System.out.println("The upper triangular representation is: \n" + mtx.getUDecomposition().toString());
+							System.out.println("The permutation matrix is: \n" + mtx.getPermutationMatrix().toString());
 							break;
 							
 						case "i":

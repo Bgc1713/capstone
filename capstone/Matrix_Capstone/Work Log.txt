@@ -75,6 +75,14 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
   	 - These would be Markov chains, system of equations, span, and independence.
   - Created program to test for span, will work on linear independence next.
  
- 4-16-19
+ 4-16-19:
   - Created program to test for linear independence
-  - Drastically improved how all programs recieve input (checks for both yes and no, not just yes or just no, asks again if no valid input is received for text responses)
+  - Drastically improved how all programs receive input (checks for both yes and no, not just yes or just no, asks again if no valid input is received for text responses)
+  
+ 4-17-19:
+  - Improved LU factorization. Now any matrix works, and a permutation matrix is provided. It behaves exactly how I would do the work by hand in class.
+  	 - This was potentially one of the most challenging parts for me, I had to learn a new concept that wasn't fully covered in class.
+  	 	- I was worried about doing it "just like class", as well as being able to create a function that works for EVERY matrix.
+  	 	- In the process of worrying, I didn't realize that a matrix that doesn't need row swaps would just have an unmodified permutation matrix. Discussions with Dr. Belanger pushed me in the right direction.
+  	 - I made sure to add this functionality to the Tester in matrixTester. 
+  	 

@@ -12,7 +12,6 @@ import matrix.Matrix;
 public class Span {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Scanner input = new Scanner(System.in);
 		boolean done = false;
 		while(!done)

@@ -47,7 +47,7 @@ public class Tester {
 			System.out.println("Your matrix is:");
 			System.out.println(mtx.toString());
 			System.out.println("What would you like to do with this matrix?");
-			System.out.println("Add(a), Subtract(s), Multiply with a scalar(m), Dot with another Matrix(d), Gaussian Elimination(g), Gauss-Jordan Elimination(gj), get determinant(det), get inverse(i), or get LU factorization(lu)");
+			System.out.println("Add(a), Subtract(s), Multiply with a scalar(m), Dot with another Matrix(d), Gaussian Elimination(g), Gauss-Jordan Elimination(gj), get determinant(det), get inverse(i), get rank(r), get nullity(n), or get LU factorization(lu)");
 			
 			hasResponded = false;
 			while(!hasResponded)
@@ -140,6 +140,16 @@ public class Tester {
 							{
 								System.out.println("This matrix is not invertible.");
 							}
+							break;
+						
+						case "r":
+							hasResponded = true;
+							System.out.println("The rank of\n" + mtx.toString() + "is " + mtx.getRank());
+							break;
+							
+						case "n":
+							hasResponded = true;
+							System.out.println("The nullity of\n" + mtx.toString() + "is " + mtx.getNullity());
 							break;
 							
 						default:

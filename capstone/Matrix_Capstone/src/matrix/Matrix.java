@@ -745,6 +745,42 @@ public class Matrix {
 		return determinant;
 	}
 	
+	/**
+	 * Get the rank of a Matrix
+	 * @return the rank of the matrix
+	 */
+	public int getRank()
+	{
+		int rank = 0;
+		Matrix reduced = this.getRowEchelonForm();
+		for(int i = 1; i <= reduced.getRows(); i++)
+		{
+			boolean isNonzero = false;
+			for(int j = 1; j <= reduced.getColumns(); j++)
+			{
+				if (reduced.getItem(i, j) != 0)
+				{
+					isNonzero = true;
+				}
+			}
+			if (isNonzero)
+			{
+				rank++;
+			}
+		}
+		return rank;
+	}
+	
+	/**
+	 * Get the nullity of a Matrix
+	 * @return the nullity of the matrix
+	 */
+	public int getNullity()
+	{
+		int nullity = this.getColumns() - this.getRank();
+		return nullity;
+	}
+	
 }
 
 	

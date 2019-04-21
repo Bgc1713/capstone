@@ -14,15 +14,14 @@ public class LinearDependence {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
-		boolean done = false;
 		
-		while(!done)
+		while(true)
 		{
 			System.out.print("How many vectors to check for linear independence?: " );
 			int vectors = Integer.parseInt(input.nextLine());
 			System.out.print("How long are these vectors?: ");
 			int vectorLength = Integer.parseInt(input.nextLine());
-			int lastLeading = 0;
+
 			if(vectors > vectorLength)
 			{
 				System.out.println("There amount of vectors is greater than the length of the vectors (m > n), therefore the vectors are linearly dependant");
@@ -38,41 +37,52 @@ public class LinearDependence {
 						mtx.setItem(j, i, Double.parseDouble(input.nextLine()));
 					}
 				}
-				System.out.println(mtx.toString());
-				//mtx.reduceToRowEchelonForm();
-				System.out.println(mtx.toString());
-				boolean independent = true;
+	/* 
+	 * I commented out this code but kept it visible to demonstrate that when creating the rank and nullity methods,
+	 * I learned that a nullity of zero represents the same thing as linear independence. I instead just check nullity
+	 * for zero here, instead of using a complicated loop.
+	 */
+//				int lastLeading = 0;
+//				boolean independent = true;
 				// Note that columns and rows go in reverse order
-				for(int i = 1; i <= mtx.getColumns(); i++)
-				{
-					boolean hasLeadingOne = false;
-					for (int j = 1; j <= mtx.getRows(); j++)
-					{
-						if(mtx.getItem(j, i) != 0)
-						{
-							if(mtx.getItem(j, i) == 1 && j > lastLeading)
-							{
-								hasLeadingOne = true;
-								lastLeading = j;
-							}
-							else
-							{
-								hasLeadingOne = false;
-							}
-						}
-					}
-					if(hasLeadingOne == false)
-					{
-						independent = false;
-					}
-				}
-				if(independent)
+//				for(int i = 1; i <= mtx.getColumns(); i++)
+//				{
+//					boolean hasLeadingOne = false;
+//					for (int j = 1; j <= mtx.getRows(); j++)
+//					{
+//						if(mtx.getItem(j, i) != 0)
+//						{
+//							if(mtx.getItem(j, i) == 1 && j > lastLeading)
+//							{
+//								hasLeadingOne = true;
+//								lastLeading = j;
+//							}
+//							else
+//							{
+//								hasLeadingOne = false;
+//							}
+//						}
+//					}
+//					if(hasLeadingOne == false)
+//					{
+//						independent = false;
+//					}
+//				}
+//				if(independent)
+//				{
+//					System.out.println("The vectors are linearly indepenedent.");
+//				}
+//				else
+//				{
+//					System.out.println("The vectors are not linearly independent.");
+//				}
+				if(mtx.getNullity() == 0)
 				{
 					System.out.println("The vectors are linearly indepenedent.");
 				}
 				else
 				{
-					System.out.println("The vectors are not linearly independent.");
+					System.out.println("The vectors are not linearly independant.");
 				}
 			}
 			

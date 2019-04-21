@@ -7,7 +7,7 @@ package matrix;
  * @version 4-17-19
  */
 
-public class Mtxops {
+public class MatrixTools {
 
 	/** Addition of two matrixes (A + B = C)
 	 * @param addend1 The first addend, Matrix A.
@@ -51,4 +51,11 @@ public class Mtxops {
 	{
 		return multiplier.dotProduct(multiplicand);
 	}
+	
+	public boolean hasSameDimensions(Matrix matrix1, Matrix matrix2)
+	{
+		return matrix1.hasSameDimensions(matrix2);
+	}
+	
+
 }

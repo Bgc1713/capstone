@@ -86,3 +86,9 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
   	 	- In the process of worrying, I didn't realize that a matrix that doesn't need row swaps would just have an unmodified permutation matrix. Discussions with Dr. Belanger pushed me in the right direction.
   	 - I made sure to add this functionality to the Tester in matrixTester. 
   	 
+ 4-20-19:
+  - Added getSpan and getNullity to the Matrix class.
+  - Improved LinearDependence program, as I learned how to use Span/Nullity to find linear dependence.
+  - Added MarkovChains demo program.
+  - Created EquationsSimplifier demo program.
+     - This program is where I really put the concept of Span and Linear Independence together. I reuse code from my Span program, and use the Nullity trick I learned to find linear independence.

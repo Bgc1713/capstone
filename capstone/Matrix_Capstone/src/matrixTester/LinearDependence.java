@@ -7,11 +7,15 @@ import matrix.Matrix;
  * A program used to demonstrate the usage of the Matrix class to check if a set of vectors are linearly independent.
  * This program assumes all input is valid.
  * @author Brendan Caudill
- * @version 4-16-18
+ * @version 4-17-19
  */
 
 public class LinearDependence {
 
+	/** 
+	 * The main program
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		

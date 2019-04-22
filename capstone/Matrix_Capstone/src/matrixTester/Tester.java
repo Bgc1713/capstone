@@ -9,7 +9,7 @@ import matrix.Matrix;
  * A program used to demonstrate the usage of the Matrix class to perform many different matrix operations.
  * This program assumes all input is valid.
  * @author Brendan Caudill
- * @version 4-17-19
+ * @version 4-22-19
  */
 public class Tester {
 
@@ -47,7 +47,17 @@ public class Tester {
 			System.out.println("Your matrix is:");
 			System.out.println(mtx.toString());
 			System.out.println("What would you like to do with this matrix?");
-			System.out.println("Add(a), Subtract(s), Multiply with a scalar(m), Dot with another Matrix(d), Gaussian Elimination(g), Gauss-Jordan Elimination(gj), get determinant(det), get inverse(i), get rank(r), get nullity(n), or get LU factorization(lu)");
+			System.out.println("Add(a),\n"
+					+ "Subtract(s),\n"
+					+ "Multiply with a scalar(m),\n"
+					+ "Dot with another Matrix(d),\n"
+					+ "Gaussian Elimination(g),\n"
+					+ "Gauss-Jordan Elimination(gj),\n"
+					+ "get determinant(det),\n"
+					+ "get inverse(i),\n"
+					+ "get rank(r),\n"
+					+ "get nullity(n),\n"
+					+ "or get LU factorization(lu)");
 			
 			hasResponded = false;
 			while(!hasResponded)

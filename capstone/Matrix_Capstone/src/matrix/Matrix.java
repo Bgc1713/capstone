@@ -57,7 +57,8 @@ public class Matrix {
 	
 	/** 
 	 * The Matrix Augmentation constructor
-	 * @param A The matrix to be copied.
+	 * @param A The matrix for the left side of the augmented matrix
+	 * @param B The matrix for the right side of the augmented matrix
 	 */
 	public Matrix(Matrix A, Matrix B)
 	{
@@ -115,7 +116,7 @@ public class Matrix {
 	 * Sets the value of a specific location in the matrix.
 	 * @param row the row containing the location.
 	 * @param column the column containing the location.
-	 * @param the value to place at the location.
+	 * @param value the value to place at the location.
 	 */
 	public void setItem(int row, int column, double value)
 	{
@@ -179,7 +180,7 @@ public class Matrix {
 	/**
 	 * A row addition operation.
 	 * @param targetRow The row to add to.
-	 * @param sourcerow The row to use for addition.
+	 * @param sourceRow The row to use for addition.
 	 */
 	public void addToRow(int targetRow, int sourceRow)
 	{
@@ -281,6 +282,7 @@ public class Matrix {
 	 * Addition of two matrixes (C = A + B)
 	 * I consider it fairly novel to use the void Matrix addition to add two matrices into default value matrix.
 	 * @param source the matrix to sum with this matrix
+	 * @return the sum of this matrix and the matrix provided
 	 */
 	public Matrix add(Matrix source)
 	{
@@ -317,6 +319,7 @@ public class Matrix {
 	/**
 	 *  Subtraction of two matrixes (C = A - B)
 	 * @param source Matrix B, the matrix to subtract from this matrix
+	 * @return the difference of this matrix and the matrix provided
 	 */
 	public Matrix subtract(Matrix source)
 	{
@@ -573,6 +576,7 @@ public class Matrix {
 	 * Performs LU factorization using Doolittle's method. Will not work for a Matrix that needs row swaps to be factorizable.
 	 * @param L Matrix to store the lower triangular result
 	 * @param U Matrix to store the upper triangular result
+	 * @param P Matrix to store the permutation matrix for row swaps
 	 */
 	private void doLUFactorization(Matrix L, Matrix U, Matrix P)
 	{

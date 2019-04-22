@@ -92,3 +92,13 @@ Everything up until the start of this log: Matrix (With deprecated matrix operat
   - Added MarkovChains demo program.
   - Created EquationsSimplifier demo program.
      - This program is where I really put the concept of Span and Linear Independence together. I reuse code from my Span program, and use the Nullity trick I learned to find linear independence.
+ 
+ 4-21-19:
+  - Created presentation for capstone project
+  
+ 4-22-19:
+  - Finalized presentation
+  - Proofread capstone paper
+  - Performed finishing touches on code
+     - added one more static method to check dot product compatibility for two matrices
+     - added javadoc comments where they weren't done yet

@@ -4,7 +4,7 @@ package matrix;
  * While using static methods does not follow OOP conventions, it provides a way for people only familiar with procedural programming
  * to work with the Matrix class in a friendlier and more intuitive way.
  * @author Brendan Caudill
- * @version 4-17-19
+ * @version 4-22-19
  */
 
 public class MatrixTools {
@@ -52,10 +52,24 @@ public class MatrixTools {
 		return multiplier.dotProduct(multiplicand);
 	}
 	
+	/** Check two matrices to see if they have the same dimensions
+	 * @param matrix1 the first matrix to check
+	 * @param matrix2 the other matrix to check
+	 * @return True if they have the same dimensions, false otherwise
+	 */
 	public boolean hasSameDimensions(Matrix matrix1, Matrix matrix2)
 	{
 		return matrix1.hasSameDimensions(matrix2);
 	}
 	
+	/** Check two matrices to see if they can be multiplied with eachother
+	 * @param matrix1 the first matrix to check (Has n rows)
+	 * @param matrix2 the second matrix to check (Has n columns)
+	 * @return true if matrix1 has the same amount of rows as the second has columns, false otherwise
+	 */
+	public boolean canBeMultiplied(Matrix matrix1, Matrix matrix2)
+	{
+		return matrix1.canBeMultipliedWith(matrix2);
+	}
 
 }

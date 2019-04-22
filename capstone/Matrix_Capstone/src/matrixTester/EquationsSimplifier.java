@@ -3,8 +3,18 @@ package matrixTester;
 import java.util.Scanner;
 import matrix.Matrix;
 
+/** A program used to demonstrate the usage of the Matrix class to simplify systems equations,
+ *  it also tells the user how many solutions a system of equations has.
+ * @author Brendan Caudill
+ * @version 4-22-19
+ */
+
 public class EquationsSimplifier {
 
+	/** 
+	 * The main program
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		while(true)

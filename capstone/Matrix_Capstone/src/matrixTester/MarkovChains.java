@@ -5,8 +5,17 @@ import matrix.Matrix;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/** A program used to demonstrate the usage of the Matrix class to perform Markov chains.
+ * @author Brendan Caudill
+ * @version 4-22-19
+ */
+
 public class MarkovChains {
 
+	/** 
+	 * The main program
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		while(true)

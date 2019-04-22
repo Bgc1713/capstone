@@ -6,11 +6,15 @@ import matrix.Matrix;
  * A program used to demonstrate the usage of the Matrix class to check if w is in the span of a set of vectors.
  * This program assumes all input is valid.
  * @author Brendan Caudill
- * @version 4-16-18
+ * @version 4-16-19
  */
 
 public class Span {
 
+	/** 
+	 * The main program
+	 * @param args ignored
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		boolean done = false;

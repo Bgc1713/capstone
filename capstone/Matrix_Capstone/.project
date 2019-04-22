@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Capstone_Paper.pdf</name>
+			<type>1</type>
+			<location>C:/Users/Brendan Caudill/Downloads/Capstone_Paper.pdf</location>
+		</link>
+	</linkedResources>
 </projectDescription>

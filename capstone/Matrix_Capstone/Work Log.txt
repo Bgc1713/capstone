@@ -1,104 +1,102 @@
 Matrix Capstone Log
 
-Everything up until the start of this log: Matrix (With deprecated matrix operations), test_main, adddition (Deprecated)
+Everything up until the start of this log: Matrix, test_main, adddition (Deprecated)
 
-3-13-19: 
+ 3-13-19: 
  - Creating the Mtxops class. This will act like the Math class and serves for matrix operations.
  	- I didn't like using the Matrix class to do math, as you needed a matrix to do the work on.
  	- The idea is to create a class to call functions with the two operands as parameters instead.
  	- This feels much more "proper", though you lose an immediate plus-equals operation. 
  		- I think it's worth it, because it makes matrix operations behave like Math.(Operation), which is something most java developers will be familiar with, therefore, it should improve usability.
  	- Ultimately, I've properly moved addition and subtraction to Mtxops, I added Multiplication for both scalars and dot products.
- 	
- - A short justification for row ops in the matrix class with matrix ops in a separate class: You always do matrix operations with two or more matrices, or some form of "outer matrix" participation, but row operations happen exclusively in a single matrix. It is more intuitive to call those ops on the specific matrix, it's less intuitive to call two matrixes by one matrix being called on and the other matrix having a paramter being passed.
  
-3-14-19:
- - Created copy constructor for matrixes
- - Started work on gaussian elimination
- 	- Got it completed, but it probably doesn't work on outliers such as 1x1 matrices. I was told code was expectedto be alpha quality so I won't worry too hard.
- 	- I forgot to add multiply and divide row operations so I had to implement them real quick.
+ 3-14-19:
+	- Created copy constructor for matrixes
+	- Started work on gaussian elimination
+ 		- Got it completed, but it probably doesn't work on outliers such as 1x1 matrices.
+ 		- I forgot to add multiply and divide row operations so I implemented them.
  	
-3-18-19:
- - Created augmentation constructor for matrixes
- 	- it can be debated that a separate "tools" class could be made for augmentation, but it makes more sense to "construct" matrixes with the actual constructor.
+ 3-18-19:
+	- Created augmentation constructor for matrixes
+ 		- it can be debated that a separate "tools" class could be made for augmentation, but it makes more sense to "construct" matrixes with the actual constructor.
  	
-3-27-19:
- - Moved all matrix operations and reductions into matrix. My idea of static Mtxops class was wrong :(
- 	- This really wasn't difficult to move back. It really demonstrates how even if the logic is in the wrong place, if it's sound logic, it will work anywhere.
- - Started thinking about potential decorator uses? It seems most decorators are using an interface, which I really wouldn't want to implement when my Matrix work focuses on just doubles.
- 	- Perhaps an interface wouldn't be hard? The interface would really only need constructor, setter, and getter as it's given things. Then I just say my current class extends it.
- 	- If I were to create a decorator, my plan would be to make it so that a decorated Matrix contains an addition Matrix for things such as augmentation. Usually when you augment a matrix, it is important to be able to access just the augmented part.
+ 3-27-19:
+ 	- Moved all matrix operations and reductions into matrix. My idea of static Mtxops class was wrong :(
+ 		- This really wasn't difficult to move back. It really demonstrates how even if the logic is in the wrong place, if it's sound logic, it will work anywhere.
+ 	- Started thinking about potential decorator uses? It seems most decorators are using an interface, which I really wouldn't want to implement when my Matrix work focuses on just doubles.
+ 	 	- Perhaps an interface wouldn't be hard? The interface would really only need constructor, setter, and getter as it's given things. Then I just say my current class extends it.
+ 	 	- If I were to create a decorator, my plan would be to make it so that a decorated Matrix contains an addition Matrix for things such as augmentation. Usually when you augment a matrix, it is important to be able to access just the augmented part.
  		- An assistant matrix would also be nice for LU factorization.
- - Decorator doesn't seem like it would work, settled for template method perhaps.
+  	- Decorator doesn't seem like it would work, settled for template method perhaps.
  
  4-3-19:
- - Created Gauss-Jordan eliminations (Both done to a matrix and retreived from a matrix)
- 	- I was partially wrong on my assumption of "Just do normal gauss elimination and then do the numbers above leading ones."
- 	- By doing so, I would have to create another complex algorithm that finds all leading ones (And deal with associated out-of-bounds problems)
- 	- Basically you can do it in terms of eliminate then do more, but it's easier to just modify the original code to do it all at once.
- 	- Also, it demonstrates how the way I would do it in the real world (Gauss elimination all the way, THEN remove numbers above leading ones) is complex to implement.
- 		- Ironically, doing it the way this program does it in real life is possible, but seems harder to me.
+ 	- Created Gauss-Jordan eliminations (Both done to a matrix and retreived from a matrix)
+ 		- I was partially wrong on my assumption of "Just do normal gauss elimination and then do the numbers above leading ones."
+ 		- By doing so, I would have to create another complex algorithm that finds all leading ones (And deal with associated out-of-bounds problems)
+ 		- Basically you can do it in terms of eliminate then do more, but it's easier to just modify the original code to do it all at once.
+ 		- Also, it demonstrates how the way I would do it in the real world (Gauss elimination all the way, THEN remove numbers above leading ones) is complex to implement.
+ 			- Ironically, doing it the way this program does it in real life is possible, but seems harder to me.
  		
  4-5-19:
- - Created inversion functions
- 	- These can be called on anything unfortunately, when really they should only be used for invertible matrices. 
- 		- Cleanup on the many instances of "not checking if it's ok" is something I'll really have to deal with, but it becomes a question: Do I check in the method and return instantly if something isn't invertible, or do I just provide an "isInvertible" method so that anyone using the class can do the checking and call anyways.
- 			- Could I do both? Check in my method, but provide the method so that any person using this class is able to check their Matrix before attempting to call and getting a resulting empty matrix? I like doing both the most.
+	- Created inversion functions
+  		- These can be called on anything unfortunately, when really they should only be used for invertible matrices. 
+ 			- Cleanup on the many instances of "not checking if it's ok" is something I'll really have to deal with, but it becomes a question: Do I check in the method and return instantly if something isn't invertible, or do I just provide an "isInvertible" method so that anyone using the class can do the checking and call anyways.
+ 				- Could I do both? Check in my method, but provide the method so that any person using this class is able to check their Matrix before attempting to call and getting a resulting empty matrix? I like doing both the most.
  			
  4-7-19:
-  - Created the LU Decomposition functions
-  	- LU factorization was something that required me to use and existing algorithm (Doolittle's algorithm) to do. It's the only instance in this project where I had to use a new algorithm, rather than just converting my knowledge into code.
-    - LU factorization is interesting and relevant to Matrices, but I'm approaching the point where it feels like I'm creating tools/accessories that are bloating the Matrix class.
-    - The largest remaining thing that needs to be done in terms of matrix class methods is determinants, which isn't too hard. 
-    - Most other things we did in the Matrix Algebra course were things that I'm not sure would be suitible for coding, or if they are, they're better in small example programs showing me using a matrix to do stuff from class.
-    	- Those "toy" programs that show me using the matrix to do coursework are where I'm really "applying" the Matrix and class knowledge, but they tend to be overly simple or overly complex. 
+	- Created the LU Decomposition functions
+		- LU factorization was something that required me to use and existing algorithm (Doolittle's algorithm) to do. It's the only instance in this project where I had to use a new algorithm, rather than just converting my knowledge into code.
+    	- LU factorization is interesting and relevant to Matrices, but I'm approaching the point where it feels like I'm creating tools/accessories that are bloating the Matrix class.
+    	- The largest remaining thing that needs to be done in terms of matrix class methods is determinants, which isn't too hard. 
+    	- Most other things we did in the Matrix Algebra course were things that I'm not sure would be suitible for coding, or if they are, they're better in small example programs showing me using a matrix to do stuff from class.
+    		- Those "toy" programs that show me using the matrix to do coursework are where I'm really "applying" the Matrix and class knowledge, but they tend to be overly simple or overly complex. 
     
  4-10-19:
-  - Turns out my LU decomposition function (Using doolittle's algorithm) actually may not work for all matrixes. I'm lead to believe it is due to how the doolittle algorithm works. It seems like doolittle's algorithm is not something that works for all matrices, though I am not sure. I'll likely reimplement LU factorization using either another algorithm, or the way it was done in class.
-  - Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)
-  - I believe I'll unfortunately stick with the Doolittle algorithm as I didn't say LU factorization was a "must" on my capstone preapproval. This algorithm breaks with certain Matrices, but worked for all examples from class I had.
-  	 - This however means I'll need to rework the Determinant algorithm to utilize guassian elimination instead of LU determinants.
+	- Turns out my LU decomposition function (Using doolittle's algorithm) actually may not work for all matrixes. I'm lead to believe it is due to how the doolittle algorithm works. It seems like doolittle's algorithm is not something that works for all matrices, though I am not sure. I'll likely reimplement LU factorization using either another algorithm, or the way it was done in class.
+	- Attempted to create a determinant function, but as it relies on an either buggy, or insufficient LU algorithm, it only works for some matrices. (maybe it does work, but the matrix I tested on just doesn't work well for computation)
+	- I believe I'll unfortunately stick with the Doolittle algorithm as I didn't say LU factorization was a "must" on my capstone preapproval. This algorithm breaks with certain Matrices, but worked for all examples from class I had.
+  		- This however means I'll need to rework the Determinant algorithm to utilize guassian elimination instead of LU determinants.
  
  4-11-19:
-  - Created a different getDeterminant method, this method is much more stable as it uses gaussian elimination to find the determinant instead of LU factorization
-     - I learned of some ways to optimize all the other gaussian/gauss-jordan elimination algorithms because of this. There were times I would swap a row with itself, rather than checking to see if it's necessary. Its unlikely there was a lot of performance loss, but it's nice to do.
-     - With determinants completed, I have accomplished all "Must" items listed in my capstone preapproval form. There is some extra functionality I wish to add however, and there is a LOT of cleanup I can do to my Matrix class.	 
+ 	- Created a different getDeterminant method, this method is much more stable as it uses gaussian elimination to find the determinant instead of LU factorization
+    	- I learned of some ways to optimize all the other gaussian/gauss-jordan elimination algorithms because of this. There were times I would swap a row with itself, rather than checking to see if it's necessary. Its unlikely there was a lot of performance loss, but it's nice to do.
+    	- With determinants completed, I have accomplished all "Must" items listed in my capstone preapproval form. There is some extra functionality I wish to add however, and there is a LOT of cleanup I can do to my Matrix class.	 
      
  4-12-19:
-  - Fixed up Mtxops class so that it provides a set of static methods to use for Matrix operations. This class will be helpful for people more familiar with procedural coding. It takes little work to add, but adds a seperate interface that may be more intuitive for some to use.
-  - Created verification methods in the Matrix class so that people can check if a location is in bounds of the matrix, or if two matrices can be multiplied with eachother.
-  	 - Professor Matthews reminded me about "design by contract", and that my methods don't have to work if a user provides invalid input, and dont even necessarily have to handle invalid input. However, it is reasonable to provide methods so that a user can check their input before using a relevant method.
+	- Fixed up Mtxops class so that it provides a set of static methods to use for Matrix operations. This class will be helpful for people more familiar with procedural coding. It takes little work to add, but adds a seperate interface that may be more intuitive for some to use.
+	- Created verification methods in the Matrix class so that people can check if a location is in bounds of the matrix, or if two matrices can be multiplied with eachother.
+  		- Professor Matthews reminded me about "design by contract", and that my methods don't have to work if a user provides invalid input, and dont even necessarily have to handle invalid input. However, it is reasonable to provide methods so that a user can check their input before using a relevant method.
   	 
  4-14-19:
-  - Turned test_main into an actual testing program that demonstrates most things that I have created. It may be buggy, but it's meant just to show that I can call stuff from Matrix. 
-  - I'm left with the question of is I should create other "test" programs that demonstrate the usage of matrices to show some of the applications we used in my Matrix Algebra class.
-  	 - These would be Markov chains, system of equations, span, and independence.
-  - Created program to test for span, will work on linear independence next.
+	- Turned test_main into an actual testing program that demonstrates most things that I have created. It may be buggy, but it's meant just to show that I can call stuff from Matrix. 
+    - I'm left with the question of is I should create other "test" programs that demonstrate the usage of matrices to show some of the applications we used in my Matrix Algebra class.
+  		- These would be Markov chains, system of equations, span, and independence.
+  	- Created program to test for span, will work on linear independence next.
  
  4-16-19:
-  - Created program to test for linear independence
-  - Drastically improved how all programs receive input (checks for both yes and no, not just yes or just no, asks again if no valid input is received for text responses)
+  	- Created program to test for linear independence
+  	- Drastically improved how all programs receive input (checks for both yes and no, not just yes or just no, asks again if no valid input is received for text responses)
   
  4-17-19:
-  - Improved LU factorization. Now any matrix works, and a permutation matrix is provided. It behaves exactly how I would do the work by hand in class.
-  	 - This was potentially one of the most challenging parts for me, I had to learn a new concept that wasn't fully covered in class.
-  	 	- I was worried about doing it "just like class", as well as being able to create a function that works for EVERY matrix.
-  	 	- In the process of worrying, I didn't realize that a matrix that doesn't need row swaps would just have an unmodified permutation matrix. Discussions with Dr. Belanger pushed me in the right direction.
-  	 - I made sure to add this functionality to the Tester in matrixTester. 
+  	- Improved LU factorization. Now any matrix works, and a permutation matrix is provided. It behaves exactly how I would do the work by hand in class.
+  		 - This was potentially one of the most challenging parts for me, I had to learn a new concept that wasn't fully covered in class.
+  	 		- I was worried about doing it "just like class", as well as being able to create a function that works for EVERY matrix.
+  	 		- In the process of worrying, I didn't realize that a matrix that doesn't need row swaps would just have an unmodified permutation matrix. Discussions with Dr. Belanger pushed me in the right direction.
+  	- I made sure to add this functionality to the Tester in matrixTester. 
   	 
  4-20-19:
-  - Added getSpan and getNullity to the Matrix class.
-  - Improved LinearDependence program, as I learned how to use Span/Nullity to find linear dependence.
-  - Added MarkovChains demo program.
-  - Created EquationsSimplifier demo program.
-     - This program is where I really put the concept of Span and Linear Independence together. I reuse code from my Span program, and use the Nullity trick I learned to find linear independence.
+ 	- Added getSpan and getNullity to the Matrix class.
+  	- Improved LinearDependence program, as I learned how to use Span/Nullity to find linear dependence.
+  	- Added MarkovChains demo program.
+  	- Created EquationsSimplifier demo program.
+    	- This program is where I really put the concept of Span and Linear Independence together. I reuse code from my Span program, and use the Nullity trick I learned to find linear independence.
  
  4-21-19:
-  - Created presentation for capstone project
+  	- Created presentation for capstone project
   
  4-22-19:
-  - Finalized presentation
-  - Proofread capstone paper
-  - Performed finishing touches on code
-     - added one more static method to check dot product compatibility for two matrices
-     - added javadoc comments where they weren't done yet
+  	- Finalized presentation
+  	- Proofread capstone paper
+  	- Performed finishing touches on code
+     	- added one more static method to check dot product compatibility for two matrices
+     	- added javadoc comments where they weren't done yet
